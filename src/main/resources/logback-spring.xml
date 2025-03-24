@@ -1,0 +1,26 @@
+<configuration>
+
+    <!-- Logování (appender) do konzole -->
+    <appender name="Terminal" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Kořenový logger -->
+    <root level="DEBUG">
+        <appender-ref ref="Terminal" />
+    </root>
+
+    <!-- Úroveň pro namespace Springu -->
+    <logger name="org.springframework" level="WARN" />
+
+    <!-- Logback profily -->
+    <springProfile name="devel">
+        <logger name="cz.tul" level="DEBUG" />
+    </springProfile>
+    <springProfile name="prod">
+        <logger name="cz.tul" level="INFO" />
+    </springProfile>
+
+</configuration>
