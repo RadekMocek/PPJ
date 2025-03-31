@@ -19,7 +19,7 @@ public class StateDAO {
 
         MapSqlParameterSource params = new MapSqlParameterSource();
 
-        params.addValue("id", state.getId());
+        params.addValue("id", state.getStateId());
         params.addValue("name", state.getName());
 
         return jdbc.update("INSERT INTO STATE (id, name) VALUES (:id, :name)", params) == 1;

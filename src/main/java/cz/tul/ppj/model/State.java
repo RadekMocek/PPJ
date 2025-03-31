@@ -2,18 +2,18 @@ package cz.tul.ppj.model;
 
 public class State {
 
-    private String id;
+    private String stateId;
 
     private String name;
 
     //
 
-    public String getId() {
-        return id;
+    public String getStateId() {
+        return stateId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setStateId(String stateId) {
+        this.stateId = stateId;
     }
 
     public String getName() {

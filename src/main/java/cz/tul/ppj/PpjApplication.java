@@ -4,6 +4,7 @@ import cz.tul.ppj.dao.CityDAO;
 import cz.tul.ppj.dao.StateDAO;
 import cz.tul.ppj.dao.WeatherDAO;
 import cz.tul.ppj.provisioning.DBProvisioner;
+import cz.tul.ppj.service.WeatherFetcher;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
@@ -42,6 +43,11 @@ public class PpjApplication {
     @Bean(initMethod = "doProvision")
     public DBProvisioner dbProvisioner() {
         return new DBProvisioner();
+    }
+
+    @Bean
+    public WeatherFetcher weatherFetcher() {
+        return new WeatherFetcher();
     }
 
 }

@@ -22,13 +22,14 @@ ALTER TABLE City
 
 CREATE TABLE Weather
 (
-    id          INT PRIMARY KEY NOT NULL,
-    cityId      INT             NOT NULL,
-    temperature INT             NOT NULL,
-    feelsLike   INT             NOT NULL,
-    pressure    FLOAT           NOT NULL,
-    humidity    FLOAT           NOT NULL,
-    description VARCHAR(128)    NOT NULL
+    timestamp   BIGINT       NOT NULL,
+    cityId      INT          NOT NULL,
+    temperature INT          NOT NULL,
+    feelsLike   INT          NOT NULL,
+    pressure    FLOAT        NOT NULL,
+    humidity    FLOAT        NOT NULL,
+    description VARCHAR(128) NOT NULL,
+    PRIMARY KEY (timestamp, cityId)
 );
 
 ALTER TABLE Weather
