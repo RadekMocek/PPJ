@@ -4,6 +4,9 @@
 # Database
 DatabaseDevel/
 
+# JSON for reference
+history.city.list.json
+
 # Java
 target/
 !.mvn/wrapper/maven-wrapper.jar

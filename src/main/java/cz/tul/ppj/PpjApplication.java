@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
+import org.springframework.web.reactive.function.client.WebClient;
 
 @SpringBootApplication
 public class PpjApplication {
@@ -22,6 +23,9 @@ public class PpjApplication {
         CityDAO cityDAO = ctx.getBean(CityDAO.class);
         StateDAO stateDAO = ctx.getBean(StateDAO.class);
         WeatherDAO weatherDAO = ctx.getBean(WeatherDAO.class);
+
+        WeatherFetcher weatherFetcher = ctx.getBean(WeatherFetcher.class);
+        weatherFetcher.fetchWeatherDataAndStoreToDatabase();
     }
 
     @Bean
@@ -50,4 +54,8 @@ public class PpjApplication {
         return new WeatherFetcher();
     }
 
+    @Bean
+    public WebClient.Builder webClientBuilder() {
+        return WebClient.builder();
+    }
 }

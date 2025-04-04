@@ -20,7 +20,10 @@ public class WeatherDAO {
 
         var params = new BeanPropertySqlParameterSource(weather);
 
-        return jdbc.update("INSERT INTO WEATHER (id, stateId, name) VALUES (:cityId, :stateId, :name)", params) == 1;
+        return jdbc.update(
+                "INSERT INTO WEATHER (timestamp, cityId, temperature, feelsLike, pressure, humidity, description)" +
+                        "VALUES (:timestamp, :cityId, :temperature, :feelsLike, :pressure, :humidity, :description)"
+                , params) == 1;
     }
 
     public boolean exists(long timestamp, int cityId) {
