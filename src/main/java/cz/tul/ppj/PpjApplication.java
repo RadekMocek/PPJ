@@ -20,12 +20,18 @@ public class PpjApplication {
         SpringApplication app = new SpringApplication(PpjApplication.class);
         ApplicationContext ctx = app.run(args);
 
+        /*
         CityDAO cityDAO = ctx.getBean(CityDAO.class);
         StateDAO stateDAO = ctx.getBean(StateDAO.class);
         WeatherDAO weatherDAO = ctx.getBean(WeatherDAO.class);
+        /**/
+
+        DBProvisioner dbProvisioner = ctx.getBean(DBProvisioner.class);
+        //dbProvisioner.doProvision();
+        //dbProvisioner.insertTestDataIntoDb();
 
         WeatherFetcher weatherFetcher = ctx.getBean(WeatherFetcher.class);
-        weatherFetcher.fetchWeatherDataAndStoreToDatabase();
+        //weatherFetcher.fetchWeatherDataAndStoreToDatabase();
     }
 
     @Bean
@@ -44,7 +50,7 @@ public class PpjApplication {
     }
 
     @Profile({"devel"})
-    @Bean(initMethod = "doProvision")
+    @Bean
     public DBProvisioner dbProvisioner() {
         return new DBProvisioner();
     }

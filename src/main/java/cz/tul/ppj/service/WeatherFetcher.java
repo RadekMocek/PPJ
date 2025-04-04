@@ -1,7 +1,11 @@
 package cz.tul.ppj.service;
 
+import cz.tul.ppj.dao.WeatherDAO;
 import cz.tul.ppj.model.Weather;
+import cz.tul.ppj.provisioning.DBProvisioner;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
@@ -14,6 +18,8 @@ public class WeatherFetcher {
 
     private final String API_URL = "https://history.openweathermap.org/data/2.5/";
 
+    private static final Logger log = LoggerFactory.getLogger(DBProvisioner.class);
+
     @Value("${openweather.api.key}")
     private String API_KEY;
 
@@ -22,6 +28,9 @@ public class WeatherFetcher {
 
     @Autowired
     private WebClient.Builder webClientBuilder;
+
+    @Autowired
+    private WeatherDAO weatherDAO;
 
     //
 
@@ -41,23 +50,30 @@ public class WeatherFetcher {
                 .bodyToMono(String.class)
                 .block();
 
-        JSONStringToWeathers(response);
+        var weatherReports = JSONStringToWeathers(response);
+
+        for (Weather weatherReport : weatherReports) {
+            weatherDAO.create(weatherReport);
+        }
+
+        log.info("WeatherFetcher :: fetchWeatherDataAndStoreToDatabase OK");
     }
 
     private List<Weather> JSONStringToWeathers(String raw) {
         var result = new ArrayList<Weather>();
 
         var jsonRoot = new JSONObject(raw);
-        var jsonArray = jsonRoot.getJSONArray("list");
+        int city_id = jsonRoot.getInt("city_id");
 
+        var jsonArray = jsonRoot.getJSONArray("list");
         jsonArray.forEach(item -> {
             var obj = (JSONObject) item;
 
             long dt = obj.getLong("dt");
 
             var main = obj.getJSONObject("main");
-            double temp = main.getDouble("temp");
-            double feels_like = main.getDouble("feels_like");
+            float temp = main.getFloat("temp");
+            float feels_like = main.getFloat("feels_like");
             int pressure = main.getInt("pressure");
             int humidity = main.getInt("humidity");
 
@@ -65,9 +81,15 @@ public class WeatherFetcher {
             var weatherItem0 = weatherArray.getJSONObject(0);
             String description = weatherItem0.getString("description");
 
-            var toAdd = new Weather();
-            toAdd.setTimestamp(dt);
-            result.add(toAdd);
+            var weatherReportToAdd = new Weather();
+            weatherReportToAdd.setTimestamp(dt);
+            weatherReportToAdd.setCityId(city_id);
+            weatherReportToAdd.setTemperature(temp);
+            weatherReportToAdd.setFeelsLike(feels_like);
+            weatherReportToAdd.setPressure(pressure);
+            weatherReportToAdd.setHumidity(humidity);
+            weatherReportToAdd.setDescription(description);
+            result.add(weatherReportToAdd);
         });
 
         return result;

@@ -33,12 +33,21 @@ public class DBProvisioner {
         }
     }
 
-    public void createDb() {
-        Resource rc = new ClassPathResource("create_tables.sql");
+    private void createDb() {
+        execSql("create_tables.sql");
+    }
+
+    public void insertTestDataIntoDb() {
+        execSql("insert_test_data.sql");
+    }
+
+    private void execSql(String classPathResourcePath) {
+        Resource rc = new ClassPathResource(classPathResourcePath);
         try {
             ScriptUtils.executeSqlScript(dataSource.getConnection(), rc);
+            log.info("DBProvisioner execSql {} OK", classPathResourcePath);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("[!] DBProvisioner execSql Exception", e);
         }
     }
 }

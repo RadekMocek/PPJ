@@ -4,11 +4,12 @@ public class Weather {
 
     private long timestamp;
 
-    private City city;
+    //private City city;
+    private int cityId;
 
-    private int temperature;
+    private float temperature;
 
-    private int feelsLike;
+    private float feelsLike;
 
     private int pressure;
 
@@ -26,27 +27,37 @@ public class Weather {
         this.timestamp = timestamp;
     }
 
+    /*
     public City getCity() {
         return city;
     }
+    /**/
+    public int getCityId() {
+        return cityId;
+    }
 
+    /*
     public void setCity(City city) {
         this.city = city;
     }
+    /**/
+    public void setCityId(int cityId) {
+        this.cityId = cityId;
+    }
 
-    public int getTemperature() {
+    public float getTemperature() {
         return temperature;
     }
 
-    public void setTemperature(int temperature) {
+    public void setTemperature(float temperature) {
         this.temperature = temperature;
     }
 
-    public int getFeelsLike() {
+    public float getFeelsLike() {
         return feelsLike;
     }
 
-    public void setFeelsLike(int feelsLike) {
+    public void setFeelsLike(float feelsLike) {
         this.feelsLike = feelsLike;
     }
 
