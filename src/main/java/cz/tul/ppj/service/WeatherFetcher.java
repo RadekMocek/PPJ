@@ -1,14 +1,13 @@
 package cz.tul.ppj.service;
 
 import cz.tul.ppj.dao.WeatherDAO;
+import cz.tul.ppj.model.City;
 import cz.tul.ppj.model.Weather;
-import cz.tul.ppj.provisioning.DBProvisioner;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.ArrayList;
@@ -18,13 +17,10 @@ public class WeatherFetcher {
 
     private final String API_URL = "https://history.openweathermap.org/data/2.5/";
 
-    private static final Logger log = LoggerFactory.getLogger(DBProvisioner.class);
+    private static final Logger log = LoggerFactory.getLogger(WeatherFetcher.class);
 
     @Value("${openweather.api.key}")
     private String API_KEY;
-
-    @Autowired
-    private NamedParameterJdbcOperations namedParameterJdbcOperations;
 
     @Autowired
     private WebClient.Builder webClientBuilder;
@@ -72,10 +68,10 @@ public class WeatherFetcher {
             long dt = obj.getLong("dt");
 
             var main = obj.getJSONObject("main");
-            float temp = main.getFloat("temp");
-            float feels_like = main.getFloat("feels_like");
-            int pressure = main.getInt("pressure");
-            int humidity = main.getInt("humidity");
+            int temp = main.getInt("temp");
+            int feels_like = main.getInt("feels_like");
+            float pressure = main.getFloat("pressure");
+            float humidity = main.getFloat("humidity");
 
             var weatherArray = obj.getJSONArray("weather");
             var weatherItem0 = weatherArray.getJSONObject(0);
@@ -83,7 +79,9 @@ public class WeatherFetcher {
 
             var weatherReportToAdd = new Weather();
             weatherReportToAdd.setTimestamp(dt);
-            weatherReportToAdd.setCityId(city_id);
+            City city = new City();
+            city.setCityId(city_id);
+            weatherReportToAdd.setCity(city);
             weatherReportToAdd.setTemperature(temp);
             weatherReportToAdd.setFeelsLike(feels_like);
             weatherReportToAdd.setPressure(pressure);

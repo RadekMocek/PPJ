@@ -32,7 +32,7 @@ public class CityDAO {
     }
 
     public void deleteAll() {
-        jdbc.getJdbcOperations().execute("TRUNCATE CITY");
+        jdbc.getJdbcOperations().execute("TRUNCATE TABLE CITY");
     }
 
 }

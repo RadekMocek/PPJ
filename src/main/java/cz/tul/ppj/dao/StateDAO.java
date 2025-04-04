@@ -34,7 +34,7 @@ public class StateDAO {
     }
 
     public void deleteAll() {
-        jdbc.getJdbcOperations().execute("TRUNCATE STATE");
+        jdbc.getJdbcOperations().execute("TRUNCATE TABLE STATE");
     }
 
 }

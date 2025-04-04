@@ -4,16 +4,15 @@ public class Weather {
 
     private long timestamp;
 
-    //private City city;
-    private int cityId;
+    private City city;
 
-    private float temperature;
+    private int temperature;
 
-    private float feelsLike;
+    private int feelsLike;
 
-    private int pressure;
+    private float pressure;
 
-    private int humidity;
+    private float humidity;
 
     private String description;
 
@@ -27,53 +26,51 @@ public class Weather {
         this.timestamp = timestamp;
     }
 
-    /*
     public City getCity() {
         return city;
     }
-    /**/
+
     public int getCityId() {
-        return cityId;
+        return city.getCityId();
     }
 
-    /*
+    public String getCityName() {
+        return city.getName();
+    }
+
     public void setCity(City city) {
         this.city = city;
     }
-    /**/
-    public void setCityId(int cityId) {
-        this.cityId = cityId;
-    }
 
-    public float getTemperature() {
+    public int getTemperature() {
         return temperature;
     }
 
-    public void setTemperature(float temperature) {
+    public void setTemperature(int temperature) {
         this.temperature = temperature;
     }
 
-    public float getFeelsLike() {
+    public int getFeelsLike() {
         return feelsLike;
     }
 
-    public void setFeelsLike(float feelsLike) {
+    public void setFeelsLike(int feelsLike) {
         this.feelsLike = feelsLike;
     }
 
-    public int getPressure() {
+    public float getPressure() {
         return pressure;
     }
 
-    public void setPressure(int pressure) {
+    public void setPressure(float pressure) {
         this.pressure = pressure;
     }
 
-    public int getHumidity() {
+    public float getHumidity() {
         return humidity;
     }
 
-    public void setHumidity(int humidity) {
+    public void setHumidity(float humidity) {
         this.humidity = humidity;
     }
 
@@ -83,5 +80,13 @@ public class Weather {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    //
+
+
+    @Override
+    public String toString() {
+        return "Weather{" + "timestamp=" + timestamp + ", city=" + getCityName() + ", temperature=" + temperature + ", feelsLike=" + feelsLike + ", pressure=" + pressure + ", humidity=" + humidity + ", description='" + description + '\'' + '}' + '\n';
     }
 }

@@ -4,8 +4,7 @@ public class City {
 
     private int cityId;
 
-    //private State state;
-    private String stateId;
+    private State state;
 
     private String name;
 
@@ -19,22 +18,15 @@ public class City {
         this.cityId = cityId;
     }
 
-    /*
     public State getState() {
         return state;
     }
-    /**/
     public String getStateId() {
-        return stateId;
+        return state.getStateId();
     }
 
-    /*
     public void setState(State state) {
         this.state = state;
-    }
-    /**/
-    public void setStateId(String stateId) {
-        this.stateId = stateId;
     }
 
     public String getName() {

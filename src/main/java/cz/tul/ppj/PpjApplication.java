@@ -20,18 +20,26 @@ public class PpjApplication {
         SpringApplication app = new SpringApplication(PpjApplication.class);
         ApplicationContext ctx = app.run(args);
 
-        /*
         CityDAO cityDAO = ctx.getBean(CityDAO.class);
         StateDAO stateDAO = ctx.getBean(StateDAO.class);
         WeatherDAO weatherDAO = ctx.getBean(WeatherDAO.class);
-        /**/
-
         DBProvisioner dbProvisioner = ctx.getBean(DBProvisioner.class);
+        WeatherFetcher weatherFetcher = ctx.getBean(WeatherFetcher.class);
+
+        // Create DB if not exists
         //dbProvisioner.doProvision();
+
+        // Insert testing data into the DB
         //dbProvisioner.insertTestDataIntoDb();
 
-        WeatherFetcher weatherFetcher = ctx.getBean(WeatherFetcher.class);
+        // Truncate table Weather
+        //weatherDAO.deleteAll();
+
+        // Populate table weather
         //weatherFetcher.fetchWeatherDataAndStoreToDatabase();
+
+        // Print out weather table contents
+        System.out.println(weatherDAO.getAllViaJoin());
     }
 
     @Bean
