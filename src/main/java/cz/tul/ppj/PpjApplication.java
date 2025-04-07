@@ -57,7 +57,7 @@ public class PpjApplication {
         return new WeatherDAO();
     }
 
-    @Profile({"devel"})
+    @Profile({"devel", "test"})
     @Bean
     public DBProvisioner dbProvisioner() {
         return new DBProvisioner();

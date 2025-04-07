@@ -6,6 +6,7 @@ DatabaseDevel/
 
 # JSON for reference
 history.city.list.json
+history.city.list.csv
 
 # Java
 target/

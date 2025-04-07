@@ -8,6 +8,7 @@ class PpjApplicationTests {
 
     @Test
     void contextLoads() {
+        assert(true);
     }
 
 }
