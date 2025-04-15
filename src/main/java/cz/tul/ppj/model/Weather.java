@@ -1,45 +1,56 @@
 package cz.tul.ppj.model;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.EmbeddedId;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "Weather")
 public class Weather {
 
-    private long timestamp;
+    @EmbeddedId
+    private WeatherKey weatherKey;
 
-    private City city;
-
+    @Column(name = "temperature")
     private int temperature;
 
+    @Column(name = "feelslike")
     private int feelsLike;
 
+    @Column(name = "pressure")
     private float pressure;
 
+    @Column(name = "humidity")
     private float humidity;
 
+    @Column(name = "description")
     private String description;
 
     //
 
     public long getTimestamp() {
-        return timestamp;
+        return weatherKey.getTimestamp();
     }
 
     public void setTimestamp(long timestamp) {
-        this.timestamp = timestamp;
+        weatherKey.setTimestamp(timestamp);
     }
 
     public City getCity() {
-        return city;
+        return weatherKey.getCity();
     }
 
     public int getCityId() {
-        return city.getCityId();
+        return weatherKey.getCityId();
     }
 
     public String getCityName() {
-        return city.getName();
+        return weatherKey.getCityName();
     }
 
     public void setCity(City city) {
-        this.city = city;
+        weatherKey.setCity(city);
     }
 
     public int getTemperature() {
@@ -87,6 +98,6 @@ public class Weather {
 
     @Override
     public String toString() {
-        return "Weather{" + "timestamp=" + timestamp + ", city=" + getCityName() + ", temperature=" + temperature + ", feelsLike=" + feelsLike + ", pressure=" + pressure + ", humidity=" + humidity + ", description='" + description + '\'' + '}' + '\n';
+        return "Weather{" + "timestamp=" + getTimestamp() + ", city=" + getCityName() + ", temperature=" + temperature + ", feelsLike=" + feelsLike + ", pressure=" + pressure + ", humidity=" + humidity + ", description='" + description + '\'' + '}' + '\n';
     }
 }
