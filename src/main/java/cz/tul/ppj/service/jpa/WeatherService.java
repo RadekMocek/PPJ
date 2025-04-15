@@ -17,8 +17,16 @@ public class WeatherService {
         weatherRepository.save(weather);
     }
 
+    public void createBulk(List<Weather> weathers) {
+        weatherRepository.saveAll(weathers);
+    }
+
     public List<Weather> getAll() {
         return weatherRepository.findAll();
+    }
+
+    public void deleteAll() {
+        weatherRepository.deleteAll();
     }
 
 }

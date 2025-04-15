@@ -2,6 +2,7 @@ package cz.tul.ppj.service;
 
 import cz.tul.ppj.model.City;
 import cz.tul.ppj.model.Weather;
+import cz.tul.ppj.model.WeatherKey;
 import cz.tul.ppj.service.jpa.WeatherService;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -15,7 +16,6 @@ import java.util.List;
 
 public class WeatherFetcher {
 
-    //*
     private final String API_URL = "https://history.openweathermap.org/data/2.5/";
 
     private static final Logger log = LoggerFactory.getLogger(WeatherFetcher.class);
@@ -49,9 +49,7 @@ public class WeatherFetcher {
 
         var weatherReports = JSONStringToWeathers(response);
 
-        for (Weather weatherReport : weatherReports) {
-            weatherService.create(weatherReport);
-        }
+        weatherService.createBulk(weatherReports);
 
         log.info("WeatherFetcher :: fetchWeatherDataAndStoreToDatabase OK");
     }
@@ -79,6 +77,8 @@ public class WeatherFetcher {
             String description = weatherItem0.getString("description");
 
             var weatherReportToAdd = new Weather();
+            var weatherKey = new WeatherKey();
+            weatherReportToAdd.setWeatherKey(weatherKey);
             weatherReportToAdd.setTimestamp(dt);
             City city = new City();
             city.setCityId(city_id);
@@ -94,5 +94,4 @@ public class WeatherFetcher {
         return result;
     }
 
-    /**/
 }

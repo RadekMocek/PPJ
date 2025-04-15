@@ -1,5 +1,9 @@
 package cz.tul.ppj.provisioning;
 
+import cz.tul.ppj.model.City;
+import cz.tul.ppj.model.State;
+import cz.tul.ppj.service.jpa.CityService;
+import cz.tul.ppj.service.jpa.StateService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +24,12 @@ public class DBProvisioner {
 
     @Autowired
     private DataSource dataSource;
+
+    @Autowired
+    private StateService stateService;
+
+    @Autowired
+    private CityService cityService;
 
     public void doProvision() {
         List<String> allTables = namedParameterJdbcOperations.getJdbcOperations().queryForList("SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES", String.class);
@@ -50,4 +60,18 @@ public class DBProvisioner {
             log.error("[!] DBProvisioner execSql Exception", e);
         }
     }
+
+    public void insertTestDataIntoDbOrm() {
+        var stateGb = new State();
+        stateGb.setStateId("GB");
+        stateGb.setName("United Kingdom of Great Britain and Northern Ireland");
+        stateService.create(stateGb);
+
+        var cityLondon = new City();
+        cityLondon.setCityId(2643743);
+        cityLondon.setState(stateGb);
+        cityLondon.setName("London");
+        cityService.create(cityLondon);
+    }
+
 }

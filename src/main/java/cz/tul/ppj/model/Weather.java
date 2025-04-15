@@ -29,6 +29,14 @@ public class Weather {
 
     //
 
+    public WeatherKey getWeatherKey() {
+        return weatherKey;
+    }
+
+    public void setWeatherKey(WeatherKey weatherKey) {
+        this.weatherKey = weatherKey;
+    }
+
     public long getTimestamp() {
         return weatherKey.getTimestamp();
     }

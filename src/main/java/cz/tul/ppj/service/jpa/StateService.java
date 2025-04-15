@@ -13,6 +13,14 @@ public class StateService {
     @Autowired
     private StateRepository stateRepository;
 
+    public void create(State state) {
+        stateRepository.save(state);
+    }
+
+    public void createBulk(List<State> states) {
+        stateRepository.saveAll(states);
+    }
+
     public List<State> getAll() {
         return stateRepository.findAll();
     }

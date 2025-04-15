@@ -20,12 +20,20 @@ public class PpjApplication {
         SpringApplication app = new SpringApplication(PpjApplication.class);
         ApplicationContext ctx = app.run(args);
 
+        DBProvisioner dbProvisioner = ctx.getBean(DBProvisioner.class);
+        WeatherFetcher weatherFetcher = ctx.getBean(WeatherFetcher.class);
+
         StateService stateService = ctx.getBean(StateService.class);
         CityService cityService = ctx.getBean(CityService.class);
         WeatherService weatherService = ctx.getBean(WeatherService.class);
 
-        // Delete everything (cascade)
-        stateService.deleteAll();
+        // Deletes
+        //stateService.deleteAll(); // Delete everything (cascade)
+        //weatherService.deleteAll();
+
+        // Download and store weather reports from API
+        //dbProvisioner.insertTestDataIntoDbOrm();
+        //weatherFetcher.fetchWeatherDataAndStoreToDatabase();
 
         // Print all stored weathers
         System.out.println(weatherService.getAll());

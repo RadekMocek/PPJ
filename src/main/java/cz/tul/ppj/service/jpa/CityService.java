@@ -13,8 +13,20 @@ public class CityService {
     @Autowired
     private CityRepository cityRepository;
 
+    public void create(City city) {
+        cityRepository.save(city);
+    }
+
+    public void createBulk(List<City> cities) {
+        cityRepository.saveAll(cities);
+    }
+
     public List<City> getAll() {
         return cityRepository.findAll();
+    }
+
+    public void deleteAll() {
+        cityRepository.deleteAll();
     }
 
 }
