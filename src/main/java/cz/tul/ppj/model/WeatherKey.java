@@ -6,6 +6,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 @Embeddable
 public class WeatherKey implements Serializable {
@@ -40,5 +41,19 @@ public class WeatherKey implements Serializable {
 
     public void setCity(City city) {
         this.city = city;
+    }
+
+    //
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        WeatherKey that = (WeatherKey) o;
+        return timestamp == that.timestamp && Objects.equals(city, that.city);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(timestamp, city);
     }
 }

@@ -15,6 +15,9 @@
     <!-- Logback profile for spring framework -->
     <logger name="org.springframework" level="WARN" />
 
+    <!-- Logback profile for HikariCP -->
+    <logger name="com.zaxxer.hikari" level="WARN" />
+
     <!-- Logback profiles for cz.tul -->
     <springProfile name="devel">
         <logger name="cz.tul" level="DEBUG" />
