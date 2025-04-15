@@ -15,7 +15,7 @@ public class State {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "state")
+    @OneToMany(mappedBy = "state", orphanRemoval = true)
     private Set<City> cities;
 
     //

@@ -17,4 +17,7 @@ public class StateService {
         return stateRepository.findAll();
     }
 
+    public void deleteAll() {
+        stateRepository.deleteAll();
+    }
 }

@@ -24,6 +24,10 @@ public class PpjApplication {
         CityService cityService = ctx.getBean(CityService.class);
         WeatherService weatherService = ctx.getBean(WeatherService.class);
 
+        // Delete everything (cascade)
+        stateService.deleteAll();
+
+        // Print all stored weathers
         System.out.println(weatherService.getAll());
     }
 

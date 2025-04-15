@@ -13,6 +13,10 @@ public class WeatherService {
     @Autowired
     private WeatherRepository weatherRepository;
 
+    public void create(Weather weather) {
+        weatherRepository.save(weather);
+    }
+
     public List<Weather> getAll() {
         return weatherRepository.findAll();
     }

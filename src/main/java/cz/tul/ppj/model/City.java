@@ -12,14 +12,14 @@ public class City {
     @Column(name = "id")
     private int cityId;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "stateid")
     private State state;
 
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "weatherKey.city")
+    @OneToMany(mappedBy = "weatherKey.city", orphanRemoval = true)
     private Set<Weather> weathers;
 
     //

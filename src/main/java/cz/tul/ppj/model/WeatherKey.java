@@ -1,9 +1,6 @@
 package cz.tul.ppj.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Embeddable;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -13,7 +10,7 @@ public class WeatherKey implements Serializable {
     @Column(name = "timestamp")
     private long timestamp;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cityid")
     private City city;
 
