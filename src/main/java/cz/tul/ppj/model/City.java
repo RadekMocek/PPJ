@@ -13,7 +13,7 @@ public class City {
     private int cityId;
 
     @ManyToOne
-    @JoinColumn(name = "stateId")
+    @JoinColumn(name = "stateid")
     private State state;
 
     @Column(name = "name")

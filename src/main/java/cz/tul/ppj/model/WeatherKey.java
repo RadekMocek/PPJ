@@ -14,7 +14,7 @@ public class WeatherKey implements Serializable {
     private long timestamp;
 
     @ManyToOne
-    @JoinColumn(name = "cityId")
+    @JoinColumn(name = "cityid")
     private City city;
 
     //

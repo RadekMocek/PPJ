@@ -23,6 +23,8 @@ public class PpjApplication {
         StateService stateService = ctx.getBean(StateService.class);
         CityService cityService = ctx.getBean(CityService.class);
         WeatherService weatherService = ctx.getBean(WeatherService.class);
+
+        System.out.println(weatherService.getAll());
     }
 
     @Profile({"devel", "test"})
