@@ -1,10 +1,10 @@
 package cz.tul.ppj;
 
-import cz.tul.ppj.dao.CityDAO;
-import cz.tul.ppj.dao.StateDAO;
-import cz.tul.ppj.dao.WeatherDAO;
 import cz.tul.ppj.provisioning.DBProvisioner;
 import cz.tul.ppj.service.WeatherFetcher;
+import cz.tul.ppj.service.jpa.CityService;
+import cz.tul.ppj.service.jpa.StateService;
+import cz.tul.ppj.service.jpa.WeatherService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
@@ -20,41 +20,9 @@ public class PpjApplication {
         SpringApplication app = new SpringApplication(PpjApplication.class);
         ApplicationContext ctx = app.run(args);
 
-        CityDAO cityDAO = ctx.getBean(CityDAO.class);
-        StateDAO stateDAO = ctx.getBean(StateDAO.class);
-        WeatherDAO weatherDAO = ctx.getBean(WeatherDAO.class);
-        DBProvisioner dbProvisioner = ctx.getBean(DBProvisioner.class);
-        WeatherFetcher weatherFetcher = ctx.getBean(WeatherFetcher.class);
-
-        // Create DB if not exists
-        //dbProvisioner.doProvision();
-
-        // Insert testing data into the DB
-        //dbProvisioner.insertTestDataIntoDb();
-
-        // Truncate table Weather
-        //weatherDAO.deleteAll();
-
-        // Populate table weather
-        //weatherFetcher.fetchWeatherDataAndStoreToDatabase();
-
-        // Print out weather table contents
-        System.out.println(weatherDAO.getAllViaJoin());
-    }
-
-    @Bean
-    public CityDAO cityDAO() {
-        return new CityDAO();
-    }
-
-    @Bean
-    public StateDAO stateDAO() {
-        return new StateDAO();
-    }
-
-    @Bean
-    public WeatherDAO weatherDAO() {
-        return new WeatherDAO();
+        StateService stateService = ctx.getBean(StateService.class);
+        CityService cityService = ctx.getBean(CityService.class);
+        WeatherService weatherService = ctx.getBean(WeatherService.class);
     }
 
     @Profile({"devel", "test"})
@@ -71,5 +39,20 @@ public class PpjApplication {
     @Bean
     public WebClient.Builder webClientBuilder() {
         return WebClient.builder();
+    }
+
+    @Bean
+    public StateService stateService() {
+        return new StateService();
+    }
+
+    @Bean
+    public CityService cityService() {
+        return new CityService();
+    }
+
+    @Bean
+    public WeatherService weatherService() {
+        return new WeatherService();
     }
 }

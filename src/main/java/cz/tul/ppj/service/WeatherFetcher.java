@@ -15,6 +15,7 @@ import java.util.List;
 
 public class WeatherFetcher {
 
+    /*
     private final String API_URL = "https://history.openweathermap.org/data/2.5/";
 
     private static final Logger log = LoggerFactory.getLogger(WeatherFetcher.class);
@@ -93,4 +94,5 @@ public class WeatherFetcher {
         return result;
     }
 
+    /**/
 }

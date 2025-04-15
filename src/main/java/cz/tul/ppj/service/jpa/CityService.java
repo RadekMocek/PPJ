@@ -1,4 +1,4 @@
-package cz.tul.ppj.service;
+package cz.tul.ppj.service.jpa;
 
 import cz.tul.ppj.repository.CityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,10 +8,6 @@ import org.springframework.stereotype.Service;
 public class CityService {
 
     @Autowired
-    public CityService(CityRepository cityRepository) {
-        this.cityRepository = cityRepository;
-    }
-
-    private final CityRepository cityRepository;
+    private CityRepository cityRepository;
 
 }
