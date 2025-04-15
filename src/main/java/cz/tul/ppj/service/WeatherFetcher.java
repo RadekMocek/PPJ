@@ -1,6 +1,5 @@
 package cz.tul.ppj.service;
 
-import cz.tul.ppj.dao.WeatherDAO;
 import cz.tul.ppj.model.City;
 import cz.tul.ppj.model.Weather;
 import org.json.JSONObject;
