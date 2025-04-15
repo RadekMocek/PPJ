@@ -19,8 +19,8 @@ public class City {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "city")
-    private Set<City> weathers;
+    @OneToMany(mappedBy = "weatherKey.city")
+    private Set<Weather> weathers;
 
     //
 
@@ -52,11 +52,11 @@ public class City {
         this.name = name;
     }
 
-    public Set<City> getWeathers() {
+    public Set<Weather> getWeathers() {
         return weathers;
     }
 
-    public void setWeathers(Set<City> weathers) {
+    public void setWeathers(Set<Weather> weathers) {
         this.weathers = weathers;
     }
 }
