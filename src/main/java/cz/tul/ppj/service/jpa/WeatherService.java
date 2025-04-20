@@ -35,6 +35,10 @@ public class WeatherService {
         return weatherRepository.findAll();
     }
 
+    public void delete(WeatherKey weatherKey) {
+        weatherRepository.deleteById(weatherKey);
+    }
+
     public void deleteAll() {
         weatherRepository.deleteAll();
     }

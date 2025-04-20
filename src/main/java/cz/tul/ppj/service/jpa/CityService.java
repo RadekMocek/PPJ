@@ -34,6 +34,10 @@ public class CityService {
         return cityRepository.findAll();
     }
 
+    public void delete(int citdyId) {
+        cityRepository.deleteById(citdyId);
+    }
+
     public void deleteAll() {
         cityRepository.deleteAll();
     }

@@ -64,4 +64,16 @@ public class StateCrudTest {
         assertFalse("State should not exist.", stateService.exists("123456789"));
     }
 
+    @Test
+    public void testDelete() {
+        final var id = "CZ";
+        var stateToAdd = initializeState(id, "Czechia");
+        stateService.create(stateToAdd);
+        var retrieved = stateService.get(id);
+        assertTrue("Inserted state retrieval should not return null.", retrieved.isPresent());
+        stateService.delete(id);
+        retrieved = stateService.get(id);
+        assertFalse("Deleted state retrieval should return null.", retrieved.isPresent());
+    }
+
 }

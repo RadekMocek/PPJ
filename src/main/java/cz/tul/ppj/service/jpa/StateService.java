@@ -34,6 +34,10 @@ public class StateService {
         return stateRepository.findAll();
     }
 
+    public void delete(String stateId) {
+        stateRepository.deleteById(stateId);
+    }
+
     public void deleteAll() {
         stateRepository.deleteAll();
     }
