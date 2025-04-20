@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class StateService {
@@ -23,6 +24,10 @@ public class StateService {
 
     public boolean exists(String stateId) {
         return stateRepository.existsById(stateId);
+    }
+
+    public Optional<State> get(String stateId) {
+        return stateRepository.findById(stateId);
     }
 
     public List<State> getAll() {

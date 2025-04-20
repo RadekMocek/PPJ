@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CityService {
@@ -23,6 +24,10 @@ public class CityService {
 
     public boolean exists(int cityId) {
         return cityRepository.existsById(cityId);
+    }
+
+    public Optional<City> get(int citdyId) {
+        return cityRepository.findById(citdyId);
     }
 
     public List<City> getAll() {

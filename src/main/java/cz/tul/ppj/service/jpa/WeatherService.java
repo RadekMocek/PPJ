@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class WeatherService {
@@ -24,6 +25,10 @@ public class WeatherService {
 
     public boolean exists(WeatherKey weatherKey) {
         return weatherRepository.existsById(weatherKey);
+    }
+
+    public Optional<Weather> get(WeatherKey weatherKey) {
+        return weatherRepository.findById(weatherKey);
     }
 
     public List<Weather> getAll() {

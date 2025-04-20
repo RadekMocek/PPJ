@@ -9,6 +9,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import static cz.tul.ppj.Helper.initializeState;
 import static org.junit.Assert.*;
 
@@ -26,25 +29,39 @@ public class StateCrudTest {
     }
 
     @Test
-    public void testCreateReceive() {
-
+    public void testCreateAndGetAll() {
         var stateToAdd = initializeState("CZ", "Czechia");
         stateService.create(stateToAdd);
         var states = stateService.getAll();
         var nStates = states.size();
         assertEquals("One state should have been created.", 1, nStates);
         assertEquals("Inserted state should match the retrieved one.", stateToAdd, states.getFirst());
+    }
 
+    @Test
+    public void testCreateBulkAndGet() {
+        var stateToAdd1 = initializeState("CZ", "Czechia");
+        var stateToAdd2 = initializeState("GE", "Georgia");
+        stateService.createBulk(new ArrayList<>(Arrays.asList(stateToAdd1, stateToAdd2, stateToAdd1 /*intentional duplicate*/)));
+        var states = stateService.getAll();
+        var nStates = states.size();
+        assertEquals("Two state should have been created.", 2, nStates);
+        var retrieved1 = stateService.get(stateToAdd1.getStateId());
+        assertTrue("Inserted state retrieval should not return null.", retrieved1.isPresent());
+        assertEquals("Inserted state should match the retrieved one.", stateToAdd1, retrieved1.get());
+        var retrieved2 = stateService.get(stateToAdd2.getStateId());
+        assertTrue("Inserted state retrieval should not return null.", retrieved2.isPresent());
+        assertEquals("Inserted state should match the retrieved one.", stateToAdd2, retrieved2.get());
+        var retrievedNull = stateService.get("123456789");
+        assertFalse("Made up state retrieval should return null.", retrievedNull.isPresent());
     }
 
     @Test
     public void testExists() {
-
         var stateToAdd = initializeState("CZ", "Czechia");
         stateService.create(stateToAdd);
         assertTrue("State should exist.", stateService.exists(stateToAdd.getStateId()));
         assertFalse("State should not exist.", stateService.exists("123456789"));
-
     }
 
 }
