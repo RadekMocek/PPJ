@@ -1,6 +1,7 @@
 package cz.tul.ppj.service.jpa;
 
 import cz.tul.ppj.model.Weather;
+import cz.tul.ppj.model.WeatherKey;
 import cz.tul.ppj.repository.WeatherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,10 @@ public class WeatherService {
 
     public void createBulk(List<Weather> weathers) {
         weatherRepository.saveAll(weathers);
+    }
+
+    public boolean exists(WeatherKey weatherKey) {
+        return weatherRepository.existsById(weatherKey);
     }
 
     public List<Weather> getAll() {

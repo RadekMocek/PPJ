@@ -21,6 +21,10 @@ public class StateService {
         stateRepository.saveAll(states);
     }
 
+    public boolean exists(String stateId) {
+        return stateRepository.existsById(stateId);
+    }
+
     public List<State> getAll() {
         return stateRepository.findAll();
     }

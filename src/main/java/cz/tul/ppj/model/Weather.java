@@ -5,6 +5,8 @@ import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
+import java.util.Objects;
+
 @Entity
 @Table(name = "Weather")
 public class Weather {
@@ -103,9 +105,23 @@ public class Weather {
 
     //
 
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Weather weather = (Weather) o;
+        return temperature == weather.temperature && feelsLike == weather.feelsLike && Float.compare(pressure, weather.pressure) == 0 && Float.compare(humidity, weather.humidity) == 0 && Objects.equals(weatherKey, weather.weatherKey) && Objects.equals(description, weather.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(weatherKey, temperature, feelsLike, pressure, humidity, description);
+    }
+
+    //
 
     @Override
     public String toString() {
         return "Weather{" + "timestamp=" + getTimestamp() + ", city=" + getCityName() + ", temperature=" + temperature + ", feelsLike=" + feelsLike + ", pressure=" + pressure + ", humidity=" + humidity + ", description='" + description + '\'' + '}' + '\n';
     }
+
 }

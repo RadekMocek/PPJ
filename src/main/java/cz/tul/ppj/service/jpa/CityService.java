@@ -21,6 +21,10 @@ public class CityService {
         cityRepository.saveAll(cities);
     }
 
+    public boolean exists(int cityId) {
+        return cityRepository.existsById(cityId);
+    }
+
     public List<City> getAll() {
         return cityRepository.findAll();
     }

@@ -2,6 +2,7 @@ package cz.tul.ppj.model;
 
 import jakarta.persistence.*;
 
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -43,4 +44,19 @@ public class State {
     public void setCities(Set<City> cities) {
         this.cities = cities;
     }
+
+    //
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        State state = (State) o;
+        return Objects.equals(stateId, state.stateId) && Objects.equals(name, state.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(stateId, name);
+    }
+
 }
