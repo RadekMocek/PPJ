@@ -65,6 +65,17 @@ public class StateCrudTest {
     }
 
     @Test
+    public void testUpdate() {
+        var stateToAdd = initializeState("CZ", "Czechia");
+        stateService.create(stateToAdd);
+        stateToAdd.setName("Bruhia");
+        stateService.updateOrCreate(stateToAdd);
+        var retrieved = stateService.get(stateToAdd.getStateId());
+        assertTrue("Updated state should not be null.", retrieved.isPresent());
+        assertEquals("Retrieved state should be updated.", retrieved.get(), stateToAdd);
+    }
+
+    @Test
     public void testDelete() {
         final var id = "CZ";
         var stateToAdd = initializeState(id, "Czechia");

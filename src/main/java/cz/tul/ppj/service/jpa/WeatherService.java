@@ -35,6 +35,10 @@ public class WeatherService {
         return weatherRepository.findAll();
     }
 
+    public void updateOrCreate(Weather weather) {
+        weatherRepository.save(weather);
+    }
+
     public void delete(WeatherKey weatherKey) {
         weatherRepository.deleteById(weatherKey);
     }

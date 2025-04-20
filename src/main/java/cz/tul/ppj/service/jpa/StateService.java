@@ -34,6 +34,10 @@ public class StateService {
         return stateRepository.findAll();
     }
 
+    public void updateOrCreate(State state) {
+        stateRepository.save(state);
+    }
+
     public void delete(String stateId) {
         stateRepository.deleteById(stateId);
     }
