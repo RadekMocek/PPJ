@@ -13,7 +13,7 @@ public class City {
     @Column(name = "id")
     private int cityId;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "stateid")
     private State state;
 

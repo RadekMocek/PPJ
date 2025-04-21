@@ -1,7 +1,6 @@
 package cz.tul.ppj.service.jpa;
 
 import cz.tul.ppj.model.City;
-import cz.tul.ppj.model.State;
 import cz.tul.ppj.repository.CityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,8 +26,8 @@ public class CityService {
         return cityRepository.existsById(cityId);
     }
 
-    public Optional<City> get(int citdyId) {
-        return cityRepository.findById(citdyId);
+    public Optional<City> get(int cityId) {
+        return cityRepository.findById(cityId);
     }
 
     public List<City> getAll() {
@@ -39,12 +38,19 @@ public class CityService {
         cityRepository.save(city);
     }
 
-    public void delete(int citdyId) {
-        cityRepository.deleteById(citdyId);
+    public void delete(int cityId) {
+        cityRepository.deleteById(cityId);
     }
 
     public void deleteAll() {
         cityRepository.deleteAll();
     }
 
+    //
+
+    public List<City> getByStateId(String stateId) {
+        if (stateId == null) return null;
+        //var result = cityRepository.findByStateId(stateId);
+        return null;
+    }
 }

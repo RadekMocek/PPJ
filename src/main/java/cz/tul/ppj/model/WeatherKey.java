@@ -10,7 +10,7 @@ public class WeatherKey implements Serializable {
     @Column(name = "timestamp")
     private long timestamp;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "cityid")
     private City city;
 
