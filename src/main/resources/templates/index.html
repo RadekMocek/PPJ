@@ -2,22 +2,59 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Weather 😏</title>
+    <link th:href="@{/styles/css.css}" rel="stylesheet"/>
+    <title>😏 Weather</title>
 </head>
+
 <body>
 
-<h2>Countries</h2>
+<h1>Advanced <s>programming</s> forecasting for Java platform</h1>
+<hr>
+<main>
+    <section id="s-country">
+        <h2>Countries</h2>
+        <form>
+            <fieldset>
+                <legend>Add country</legend>
+                <label for="country-add-code">Country code:</label>
+                <input type="text" id="country-add-code"><br><br>
+                <label for="country-add-name">Country name:</label>
+                <input type="text" id="country-add-name"><br><br>
+                <button>Create</button>
+            </fieldset>
+        </form>
+        <br>
 
-<form>
-    <fieldset>
-        <legend>Add country</legend>
-        <label for="state-add-code">Country code:</label>
-        <input type="text" id="state-add-code"><br><br>
-        <label for="state-add-name">Country name:</label>
-        <input type="text" id="state-add-name"><br><br>
-        <input type="submit" value="Submit">
-    </fieldset>
-</form>
+    </section>
+
+    <section id="s-city">
+        <h2>Cities</h2>
+        <form>
+            <fieldset>
+                <legend>Add city</legend>
+                <label for="city-add-code">Country code:</label>
+                <input type="text" id="city-add-code"><br><br>
+                <label for="city-add-name">City name:</label>
+                <input type="text" id="city-add-name"><br><br>
+                <input type="submit" value="Submit">
+            </fieldset>
+        </form>
+    </section>
+
+    <section id="s-weather">
+        <h2>Weather reports</h2>
+        <form>
+            <fieldset>
+                <legend>Add weather report</legend>
+                <label for="weather-add-code">City code:</label>
+                <input type="text" id="weather-add-code"><br><br>
+                <label for="weather-add-timestamp">Timestamp:</label>
+                <input type="text" id="weather-add-timestamp"><br><br>
+                <input type="submit" value="Submit">
+            </fieldset>
+        </form>
+    </section>
+</main>
 
 </body>
 </html>

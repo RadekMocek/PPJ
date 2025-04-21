@@ -1,5 +1,6 @@
 package cz.tul.ppj.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.Objects;
@@ -20,6 +21,7 @@ public class City {
     @Column(name = "name")
     private String name;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "weatherKey.city", orphanRemoval = true)
     private Set<Weather> weathers;
 

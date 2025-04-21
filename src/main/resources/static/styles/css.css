@@ -1,0 +1,25 @@
+body {
+    width: 90%;
+    margin: 0 auto;
+}
+
+main {
+    display: flex;
+}
+
+fieldset {
+    border-left: none;
+    border-right: none;
+}
+
+#s-country {
+    width: 25%;
+}
+
+#s-city {
+    width: 25%;
+}
+
+#s-weather {
+    width: 50%;
+}

@@ -1,5 +1,6 @@
 package cz.tul.ppj.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.Objects;
@@ -16,6 +17,7 @@ public class State {
     @Column(name = "name")
     private String name;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "state", orphanRemoval = true)
     private Set<City> cities;
 
