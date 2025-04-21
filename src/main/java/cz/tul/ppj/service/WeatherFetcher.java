@@ -34,18 +34,7 @@ public class WeatherFetcher {
     public void fetchWeatherDataAndStoreToDatabase() {
         String cityCountry = "London,GB";
 
-        String response = webClientBuilder
-                .baseUrl(API_URL)
-                .build()
-                .get()
-                .uri(uriBuilder -> uriBuilder
-                        .path("history/city")
-                        .queryParam("q", cityCountry)
-                        .queryParam("appid", API_KEY)
-                        .build())
-                .retrieve()
-                .bodyToMono(String.class)
-                .block();
+        String response = webClientBuilder.baseUrl(API_URL).build().get().uri(uriBuilder -> uriBuilder.path("history/city").queryParam("q", cityCountry).queryParam("appid", API_KEY).build()).retrieve().bodyToMono(String.class).block();
 
         var weatherReports = JSONStringToWeathers(response);
 
@@ -67,10 +56,10 @@ public class WeatherFetcher {
             long dt = obj.getLong("dt");
 
             var main = obj.getJSONObject("main");
-            int temp = main.getInt("temp");
-            int feels_like = main.getInt("feels_like");
-            float pressure = main.getFloat("pressure");
-            float humidity = main.getFloat("humidity");
+            float temp = main.getFloat("temp");
+            float feels_like = main.getFloat("feels_like");
+            int pressure = main.getInt("pressure");
+            int humidity = main.getInt("humidity");
 
             var weatherArray = obj.getJSONArray("weather");
             var weatherItem0 = weatherArray.getJSONObject(0);

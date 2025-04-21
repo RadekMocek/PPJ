@@ -44,11 +44,11 @@ public class DBProvisioner {
     }
 
     private void createDb() {
-        execSql("create_tables.sql");
+        execSql("old/create_tables.sql");
     }
 
     public void insertTestDataIntoDb() {
-        execSql("insert_test_data.sql");
+        execSql("old/insert_test_data.sql");
     }
 
     private void execSql(String classPathResourcePath) {

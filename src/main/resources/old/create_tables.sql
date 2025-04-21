@@ -24,10 +24,10 @@ CREATE TABLE Weather
 (
     timestamp   BIGINT       NOT NULL,
     cityId      INT          NOT NULL,
-    temperature INT          NOT NULL,
-    feelsLike   INT          NOT NULL,
-    pressure    FLOAT        NOT NULL,
-    humidity    FLOAT        NOT NULL,
+    temperature FLOAT        NOT NULL,
+    feelsLike   FLOAT        NOT NULL,
+    pressure    INT          NOT NULL,
+    humidity    INT          NOT NULL,
     description VARCHAR(128) NOT NULL,
     PRIMARY KEY (timestamp, cityId)
 );

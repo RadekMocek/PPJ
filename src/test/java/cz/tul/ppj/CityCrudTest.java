@@ -32,7 +32,7 @@ public class CityCrudTest {
 
     @Before
     public void init() {
-        cityService.deleteAll();
+        stateService.deleteAll();
     }
 
     private final State state1 = initializeState("CZ", "Czechia");

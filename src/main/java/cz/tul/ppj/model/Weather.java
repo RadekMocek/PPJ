@@ -15,16 +15,16 @@ public class Weather {
     private WeatherKey weatherKey;
 
     @Column(name = "temperature")
-    private int temperature;
+    private float temperature;
 
     @Column(name = "feelslike")
-    private int feelsLike;
+    private float feelsLike;
 
     @Column(name = "pressure")
-    private float pressure;
+    private int pressure;
 
     @Column(name = "humidity")
-    private float humidity;
+    private int humidity;
 
     @Column(name = "description")
     private String description;
@@ -63,35 +63,35 @@ public class Weather {
         weatherKey.setCity(city);
     }
 
-    public int getTemperature() {
+    public float getTemperature() {
         return temperature;
     }
 
-    public void setTemperature(int temperature) {
+    public void setTemperature(float temperature) {
         this.temperature = temperature;
     }
 
-    public int getFeelsLike() {
+    public float getFeelsLike() {
         return feelsLike;
     }
 
-    public void setFeelsLike(int feelsLike) {
+    public void setFeelsLike(float feelsLike) {
         this.feelsLike = feelsLike;
     }
 
-    public float getPressure() {
+    public int getPressure() {
         return pressure;
     }
 
-    public void setPressure(float pressure) {
+    public void setPressure(int pressure) {
         this.pressure = pressure;
     }
 
-    public float getHumidity() {
+    public int getHumidity() {
         return humidity;
     }
 
-    public void setHumidity(float humidity) {
+    public void setHumidity(int humidity) {
         this.humidity = humidity;
     }
 
