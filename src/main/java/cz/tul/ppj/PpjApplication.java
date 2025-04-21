@@ -36,7 +36,10 @@ public class PpjApplication {
         //weatherFetcher.fetchWeatherDataAndStoreToDatabase();
 
         // Print all stored weathers
-        System.out.println(weatherService.getAll());
+        //System.out.println(weatherService.getAll());
+
+        //
+        System.out.println("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
     }
 
     @Profile({"devel", "test"})
