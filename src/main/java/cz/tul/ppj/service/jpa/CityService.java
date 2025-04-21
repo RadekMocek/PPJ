@@ -5,6 +5,7 @@ import cz.tul.ppj.repository.CityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,8 +50,7 @@ public class CityService {
     //
 
     public List<City> getByStateId(String stateId) {
-        if (stateId == null) return null;
-        //var result = cityRepository.findByStateId(stateId);
-        return null;
+        if (stateId == null) return new ArrayList<>(0);
+        return cityRepository.findByStateId(stateId);
     }
 }

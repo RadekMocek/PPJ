@@ -111,4 +111,20 @@ public class CityCrudTest {
         assertFalse("Deleted city retrieval should be null.", retrieved.isPresent());
     }
 
+    @Test
+    public void testGetByStateId() {
+        stateService.create(state1);
+        stateService.create(state2);
+        cityService.create(city11);
+        cityService.create(city12);
+        cityService.create(city21);
+        cityService.create(city22);
+        var result1 = cityService.getByStateId(state1.getStateId());
+        assertEquals("There should be two cities for this stateId.", 2, result1.size());
+        var result2 = cityService.getByStateId(state2.getStateId());
+        assertEquals("There should be two cities for this stateId.", 2, result2.size());
+        var result0 = cityService.getByStateId("123456789");
+        assertTrue("There should be no cities for made up stateId.", result0.isEmpty());
+    }
+
 }
