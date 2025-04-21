@@ -34,7 +34,16 @@ public class WeatherFetcher {
     public void fetchWeatherDataAndStoreToDatabase() {
         String cityCountry = "London,GB";
 
-        String response = webClientBuilder.baseUrl(API_URL).build().get().uri(uriBuilder -> uriBuilder.path("history/city").queryParam("q", cityCountry).queryParam("appid", API_KEY).build()).retrieve().bodyToMono(String.class).block();
+        String response = webClientBuilder
+                .baseUrl(API_URL)
+                .build()
+                .get()
+                .uri(uriBuilder -> uriBuilder.path("history/city")
+                        .queryParam("q", cityCountry)
+                        .queryParam("appid", API_KEY).build())
+                .retrieve()
+                .bodyToMono(String.class)
+                .block();
 
         var weatherReports = JSONStringToWeathers(response);
 

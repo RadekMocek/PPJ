@@ -50,7 +50,7 @@ public class CityService {
     //
 
     public List<City> getByStateId(String stateId) {
-        if (stateId == null) return new ArrayList<>(0);
+        if (stateId == null) return new ArrayList<>();
         return cityRepository.findByStateId(stateId);
     }
 }

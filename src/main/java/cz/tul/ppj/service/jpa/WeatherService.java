@@ -47,4 +47,10 @@ public class WeatherService {
         weatherRepository.deleteAll();
     }
 
+    //
+
+    public List<Weather> getByCityId(int cityId) {
+        return weatherRepository.findByCityId(cityId);
+    }
+
 }

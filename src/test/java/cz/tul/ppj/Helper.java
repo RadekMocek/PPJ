@@ -24,12 +24,16 @@ public final class Helper {
         return result;
     }
 
+    public static WeatherKey initializeWeatherKey(long timestamp, City city) {
+        var result = new WeatherKey();
+        result.setTimestamp(timestamp);
+        result.setCity(city);
+        return result;
+    }
+
     public static Weather initializeWeather(long timestamp, City city, float temperature, float feelsLike, int pressure, int humidity, String description) {
         var result = new Weather();
-        var weatherKey = new WeatherKey();
-        weatherKey.setTimestamp(timestamp);
-        weatherKey.setCity(city);
-        result.setWeatherKey(weatherKey);
+        result.setWeatherKey(initializeWeatherKey(timestamp, city));
         result.setTemperature(temperature);
         result.setFeelsLike(feelsLike);
         result.setPressure(pressure);

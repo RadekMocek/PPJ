@@ -60,8 +60,8 @@ public class StateCrudTest {
     public void testExists() {
         var stateToAdd = initializeState("CZ", "Czechia");
         stateService.create(stateToAdd);
-        assertTrue("State should exist.", stateService.exists(stateToAdd.getStateId()));
-        assertFalse("State should not exist.", stateService.exists("123456789"));
+        assertTrue("Inserted state should exist.", stateService.exists(stateToAdd.getStateId()));
+        assertFalse("Made up state should not exist.", stateService.exists("123456789"));
     }
 
     @Test

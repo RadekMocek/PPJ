@@ -73,14 +73,13 @@ public class CityCrudTest {
     public void testExists() {
         stateService.create(state1);
         cityService.create(city11);
-        assertTrue("City should exist.", cityService.exists(city11.getCityId()));
-        assertFalse("State should not exist.", cityService.exists(-1));
+        assertTrue("Inserted city should exist.", cityService.exists(city11.getCityId()));
+        assertFalse("Made up city should not exist.", cityService.exists(-1));
     }
 
     @Test
     public void testUpdate() {
         stateService.create(state1);
-        //var city11 = initializeCity(3067696, state1, "Praha");
         cityService.create(city11);
         city11.setName("Braha");
         cityService.updateOrCreate(city11);
