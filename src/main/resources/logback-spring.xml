@@ -19,6 +19,9 @@
     <logger name="com.zaxxer.hikari" level="WARN" />
 
     <!-- Logback profiles for cz.tul -->
+    <springProfile name="test">
+        <logger name="cz.tul" level="DEBUG" />
+    </springProfile>
     <springProfile name="devel">
         <logger name="cz.tul" level="DEBUG" />
     </springProfile>

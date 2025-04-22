@@ -20,19 +20,39 @@ public class ApiStateController {
         this.stateService = stateService;
     }
 
+    @PostMapping("/states")
+    public ResponseEntity<?> createState(@RequestBody State state) {
+        if (stateService.exists(state.getStateId())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error message.");
+        } else {
+            stateService.create(state);
+            return ResponseEntity.status(HttpStatus.CREATED).body(state);
+        }
+    }
+
     @GetMapping("/states")
     public ResponseEntity<List<State>> getAllStates() {
         var states = stateService.getAll();
-        return new ResponseEntity<>(states, HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.OK).body(states);
     }
 
     @PutMapping("/states")
-    public ResponseEntity<State> createState(@RequestBody State state) {
+    public ResponseEntity<?> updateState(@RequestBody State state) {
         if (stateService.exists(state.getStateId())) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            stateService.updateOrCreate(state);
+            return ResponseEntity.status(HttpStatus.OK).body(state);
         } else {
-            stateService.create(state);
-            return new ResponseEntity<>(state, HttpStatus.CREATED);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error message.");
+        }
+    }
+
+    @DeleteMapping("/states/{stateid}")
+    public ResponseEntity<?> deleteState(@PathVariable("stateid") String stateId) {
+        if (stateService.exists(stateId)) {
+            stateService.delete(stateId);
+            return ResponseEntity.status(HttpStatus.OK).body("Success message.");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error message.");
         }
     }
 
