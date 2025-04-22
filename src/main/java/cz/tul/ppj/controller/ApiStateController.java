@@ -20,7 +20,7 @@ public class ApiStateController {
         this.stateService = stateService;
     }
 
-    @PostMapping("/states")
+    @PutMapping("/states")
     public ResponseEntity<?> createState(@RequestBody State state) {
         if (stateService.exists(state.getStateId())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error message.");
@@ -36,7 +36,7 @@ public class ApiStateController {
         return ResponseEntity.status(HttpStatus.OK).body(states);
     }
 
-    @PutMapping("/states")
+    @PatchMapping("/states")
     public ResponseEntity<?> updateState(@RequestBody State state) {
         if (stateService.exists(state.getStateId())) {
             stateService.updateOrCreate(state);

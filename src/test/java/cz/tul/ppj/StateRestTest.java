@@ -46,7 +46,7 @@ public class StateRestTest {
 
     @Test
     public void testCreate() {
-        client.post().uri("/states")
+        client.put().uri("/states")
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(state1)
                 .accept(MediaType.APPLICATION_JSON)
@@ -56,7 +56,7 @@ public class StateRestTest {
 
         assertTrue("Inserted state should exist.", stateService.exists(state1.getStateId()));
 
-        client.post().uri("/states")
+        client.put().uri("/states")
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(state1)
                 .accept(MediaType.APPLICATION_JSON)
@@ -90,7 +90,7 @@ public class StateRestTest {
 
     @Test
     public void testUpdate() {
-        client.put().uri("/states")
+        client.patch().uri("/states")
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(state1)
                 .accept(MediaType.APPLICATION_JSON)
@@ -99,7 +99,7 @@ public class StateRestTest {
 
         stateService.create(state1);
         state1.setName("Bruhia");
-        client.put().uri("/states")
+        client.patch().uri("/states")
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(state1)
                 .accept(MediaType.APPLICATION_JSON)
