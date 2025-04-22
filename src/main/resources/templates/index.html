@@ -23,9 +23,8 @@
               hx-target="#response-country-ok"
               hx-target-error="#response-country-err"
               hx-on::before-request="clearResponseMessages()"
-              hx-on::after-on-load="refreshCountryList()"
+              hx-on::after-request="refreshCountryList()"
         >
-            <!-- hx-on::after-on-load="refreshCountryList()" does not work as expected -->
             <fieldset>
                 <legend>Add country</legend>
                 <label for="country-add-code">Country code:</label>
@@ -37,20 +36,18 @@
             </fieldset>
         </form>
         <br>
-        <div id="response-country-ok" class="response-ok"></div>
-        <div id="response-country-err" class="response-err"></div>
+        <div id="response-country-ok" class="response-ok">&nbsp;</div>
+        <div id="response-country-err" class="response-err">&nbsp;</div>
         <br>
-        <button hx-get="/web/states" hx-target="#list-country" hx-swap="outerHTML">Reload</button>
-
         <button hx-delete="/api/states"
-                hx-on::before-request="clearResponseMessages()"
                 hx-target="#response-country-ok"
                 hx-confirm="This will delete EVERYTHING due to cascade. Are you sure?"
+                hx-on::before-request="clearResponseMessages()"
+                hx-on::after-request="refreshCountryList()"
         >
             DELETE ALL
         </button>
-
-        <div id="list-country" hx-get="/web/states" hx-swap="outerHTML" hx-trigger="refreshEvent"></div>
+        <div id="list-country" hx-get="/web/states" hx-swap="innerHTML" hx-trigger="refreshCountryEvent"></div>
     </section>
     <!-- Cities -->
     <section id="section-city">

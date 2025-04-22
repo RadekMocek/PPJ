@@ -10,10 +10,10 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 const clearResponseMessages = () => {
-    countryResponseOk.innerHTML = "";
-    countryResponseErr.innerHTML = "";
+    countryResponseOk.innerHTML = "&nbsp;";
+    countryResponseErr.innerHTML = "&nbsp;";
 };
 
 const refreshCountryList = () => {
-    htmx.trigger("#list-country", "refreshEvent");
+    htmx.trigger("#list-country", "refreshCountryEvent");
 };
