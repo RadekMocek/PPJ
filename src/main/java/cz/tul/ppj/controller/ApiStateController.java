@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -61,6 +63,17 @@ public class ApiStateController {
     public ResponseEntity<?> deleteAll() {
         stateService.deleteAll();
         return ResponseEntity.status(HttpStatus.OK).body("Deleted everything.");
+    }
+
+    //
+
+    @PutMapping("/states/testing")
+    public ResponseEntity<?> createTestingData() {
+        State state1 = new State("CZ", "Czechia");
+        State state2 = new State("GE", "Georgia");
+        State state3 = new State("ES", "Spain");
+        stateService.createBulk(new ArrayList<>(Arrays.asList(state1, state2, state3)));
+        return ResponseEntity.status(HttpStatus.CREATED).body("Added countries for testing.");
     }
 
 }

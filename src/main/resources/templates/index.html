@@ -22,8 +22,8 @@
               hx-ext="json-enc"
               hx-target="#response-country-ok"
               hx-target-error="#response-country-err"
-              hx-on::before-request="clearResponseMessages()"
-              hx-on::after-request="refreshCountryList()"
+              hx-on::before-request="clearResponseMessages();"
+              hx-on::after-request="this.reset();refreshCountryList();"
         >
             <fieldset>
                 <legend>Add country</legend>
@@ -41,11 +41,19 @@
         <br>
         <button hx-delete="/api/states"
                 hx-target="#response-country-ok"
-                hx-confirm="This will delete EVERYTHING due to cascade. Are you sure?"
-                hx-on::before-request="clearResponseMessages()"
-                hx-on::after-request="refreshCountryList()"
+                hx-confirm="This will delete EVERYTHING due to cascade.&#10;&#10;Are you sure?"
+                hx-on::before-request="clearResponseMessages();"
+                hx-on::after-request="refreshCountryList();"
         >
             DELETE ALL
+        </button>
+        <button
+            hx-put="/api/states/testing"
+            hx-target="#response-country-ok"
+            hx-on::before-request="clearResponseMessages();"
+            hx-on::after-request="refreshCountryList();"
+        >
+            Add testing data
         </button>
         <div id="list-country" hx-get="/web/states" hx-swap="innerHTML" hx-trigger="refreshCountryEvent"></div>
     </section>

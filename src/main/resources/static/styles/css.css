@@ -1,6 +1,7 @@
 :root {
     --color-ok: #7a882e;
     --color-err: #743e4c;
+    --color-click: #204e8a;
 }
 
 body {
@@ -52,4 +53,13 @@ table tr:nth-child(even) {
 table th, table td {
     text-align: left;
     padding: 0.4em;
+}
+
+table td span {
+    color: var(--color-click);
+}
+
+table td span:hover {
+    text-decoration: underline;
+    cursor: pointer;
 }

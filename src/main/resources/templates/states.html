@@ -5,23 +5,35 @@
     <title>States</title>
 </head>
 <body>
-    <div th:fragment="statesList">
-        <table>
-            <thead>
-                <tr>
-                    <th>Code</th>
-                    <th>Name</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="state : ${statesList}">
-                    <td th:text="${state.stateId}"></td>
-                    <td th:text="${state.name}"></td>
-                    <td>Edit, Delete</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+
+<div th:fragment="statesList">
+    <table>
+        <thead>
+        <tr>
+            <th>Code</th>
+            <th>Name</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="state : ${statesList}">
+            <td th:text="${state.stateId}"></td>
+            <td th:text="${state.name}"></td>
+            <td>
+                <span>Edit</span>,
+                <span
+                        th:hx-delete="@{/api/states/{id}(id=${state.stateId})}"
+                        hx-confirm="This will delete the country and ALL of its cities and weather reports.&#10;&#10;Are you sure?"
+                        hx-on::before-request="clearResponseMessages();"
+                        hx-on::after-request="refreshCountryList();"
+                >
+                    Delete
+                </span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
 </body>
 </html>
