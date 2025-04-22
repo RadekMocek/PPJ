@@ -1,6 +1,5 @@
 package cz.tul.ppj;
 
-import cz.tul.ppj.provisioning.DBProvisioner;
 import cz.tul.ppj.service.WeatherFetcher;
 import cz.tul.ppj.service.jpa.CityService;
 import cz.tul.ppj.service.jpa.StateService;
@@ -9,7 +8,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Profile;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @SpringBootApplication
@@ -20,7 +18,6 @@ public class PpjApplication {
         SpringApplication app = new SpringApplication(PpjApplication.class);
         ApplicationContext ctx = app.run(args);
 
-        DBProvisioner dbProvisioner = ctx.getBean(DBProvisioner.class);
         WeatherFetcher weatherFetcher = ctx.getBean(WeatherFetcher.class);
 
         StateService stateService = ctx.getBean(StateService.class);
@@ -32,7 +29,6 @@ public class PpjApplication {
         //weatherService.deleteAll();
 
         // Download and store weather reports from API
-        //dbProvisioner.insertTestDataIntoDbOrm();
         //weatherFetcher.fetchWeatherDataAndStoreToDatabase();
 
         // Print all stored weathers
@@ -40,12 +36,6 @@ public class PpjApplication {
 
         //
         System.out.println("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
-    }
-
-    @Profile({"devel", "test"})
-    @Bean
-    public DBProvisioner dbProvisioner() {
-        return new DBProvisioner();
     }
 
     @Bean
