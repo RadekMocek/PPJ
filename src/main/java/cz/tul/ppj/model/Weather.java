@@ -124,4 +124,18 @@ public class Weather {
         return "Weather{" + "timestamp=" + getTimestamp() + ", city=" + getCityName() + ", temperature=" + temperature + ", feelsLike=" + feelsLike + ", pressure=" + pressure + ", humidity=" + humidity + ", description='" + description + '\'' + '}' + '\n';
     }
 
+    //
+
+    public Weather() {
+    }
+
+    public Weather(long timestamp, City city, float temperature, float feelsLike, int pressure, int humidity, String description) {
+        this.weatherKey = new WeatherKey(timestamp, city);
+        this.temperature = temperature;
+        this.feelsLike = feelsLike;
+        this.pressure = pressure;
+        this.humidity = humidity;
+        this.description = description;
+    }
+
 }

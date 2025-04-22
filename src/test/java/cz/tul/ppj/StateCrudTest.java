@@ -1,5 +1,6 @@
 package cz.tul.ppj;
 
+import cz.tul.ppj.model.State;
 import cz.tul.ppj.service.jpa.StateService;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,7 +13,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static cz.tul.ppj.Helper.initializeState;
 import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
@@ -28,62 +28,58 @@ public class StateCrudTest {
         stateService.deleteAll();
     }
 
+    private final State state1 = new State("CZ", "Czechia");
+    private final State state2 = new State("GE", "Georgia");
+
     @Test
     public void testCreateAndGetAll() {
-        var stateToAdd = initializeState("CZ", "Czechia");
-        stateService.create(stateToAdd);
+        stateService.create(state1);
         var states = stateService.getAll();
         var nStates = states.size();
         assertEquals("One state should have been created.", 1, nStates);
-        assertEquals("Inserted state should match the retrieved one.", stateToAdd, states.getFirst());
+        assertEquals("Inserted state should match the retrieved one.", state1, states.getFirst());
     }
 
     @Test
     public void testCreateBulkAndGet() {
-        var stateToAdd1 = initializeState("CZ", "Czechia");
-        var stateToAdd2 = initializeState("GE", "Georgia");
-        stateService.createBulk(new ArrayList<>(Arrays.asList(stateToAdd1, stateToAdd2, stateToAdd1 /*intentional duplicate*/)));
+        stateService.createBulk(new ArrayList<>(Arrays.asList(state1, state2, state1 /*intentional duplicate*/)));
         var states = stateService.getAll();
         var nStates = states.size();
         assertEquals("Two state should have been created.", 2, nStates);
-        var retrieved1 = stateService.get(stateToAdd1.getStateId());
+        var retrieved1 = stateService.get(state1.getStateId());
         assertTrue("Inserted state retrieval should not return null.", retrieved1.isPresent());
-        assertEquals("Inserted state should match the retrieved one.", stateToAdd1, retrieved1.get());
-        var retrieved2 = stateService.get(stateToAdd2.getStateId());
+        assertEquals("Inserted state should match the retrieved one.", state1, retrieved1.get());
+        var retrieved2 = stateService.get(state2.getStateId());
         assertTrue("Inserted state retrieval should not return null.", retrieved2.isPresent());
-        assertEquals("Inserted state should match the retrieved one.", stateToAdd2, retrieved2.get());
+        assertEquals("Inserted state should match the retrieved one.", state2, retrieved2.get());
         var retrievedNull = stateService.get("123456789");
         assertFalse("Made up state retrieval should return null.", retrievedNull.isPresent());
     }
 
     @Test
     public void testExists() {
-        var stateToAdd = initializeState("CZ", "Czechia");
-        stateService.create(stateToAdd);
-        assertTrue("Inserted state should exist.", stateService.exists(stateToAdd.getStateId()));
+        stateService.create(state1);
+        assertTrue("Inserted state should exist.", stateService.exists(state1.getStateId()));
         assertFalse("Made up state should not exist.", stateService.exists("123456789"));
     }
 
     @Test
     public void testUpdate() {
-        var stateToAdd = initializeState("CZ", "Czechia");
-        stateService.create(stateToAdd);
-        stateToAdd.setName("Bruhia");
-        stateService.updateOrCreate(stateToAdd);
-        var retrieved = stateService.get(stateToAdd.getStateId());
+        stateService.create(state1);
+        state1.setName("Bruhia");
+        stateService.updateOrCreate(state1);
+        var retrieved = stateService.get(state1.getStateId());
         assertTrue("Updated state should not be null.", retrieved.isPresent());
-        assertEquals("Retrieved state should be updated.", retrieved.get(), stateToAdd);
+        assertEquals("Retrieved state should be updated.", retrieved.get(), state1);
     }
 
     @Test
     public void testDelete() {
-        final var id = "CZ";
-        var stateToAdd = initializeState(id, "Czechia");
-        stateService.create(stateToAdd);
-        var retrieved = stateService.get(id);
+        stateService.create(state1);
+        var retrieved = stateService.get(state1.getStateId());
         assertTrue("Inserted state retrieval should not return null.", retrieved.isPresent());
-        stateService.delete(id);
-        retrieved = stateService.get(id);
+        stateService.delete(state1.getStateId());
+        retrieved = stateService.get(state1.getStateId());
         assertFalse("Deleted state retrieval should return null.", retrieved.isPresent());
     }
 

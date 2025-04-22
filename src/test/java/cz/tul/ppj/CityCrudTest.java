@@ -15,8 +15,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static cz.tul.ppj.Helper.initializeCity;
-import static cz.tul.ppj.Helper.initializeState;
 import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
@@ -35,12 +33,12 @@ public class CityCrudTest {
         stateService.deleteAll();
     }
 
-    private final State state1 = initializeState("CZ", "Czechia");
-    private final State state2 = initializeState("GE", "Georgia");
-    private final City city11 = initializeCity(3067696, state1, "Prague");
-    private final City city12 = initializeCity(3071961, state1, "Liberec");
-    private final City city21 = initializeCity(611717, state2, "Tbilisi");
-    private final City city22 = initializeCity(615532, state2, "Batumi");
+    private final State state1 = new State("CZ", "Czechia");
+    private final State state2 = new State("GE", "Georgia");
+    private final City city11 = new City(3067696, state1, "Prague");
+    private final City city12 = new City(3071961, state1, "Liberec");
+    private final City city21 = new City(611717, state2, "Tbilisi");
+    private final City city22 = new City(615532, state2, "Batumi");
 
     @Test
     public void testCreateAndGetAll() {

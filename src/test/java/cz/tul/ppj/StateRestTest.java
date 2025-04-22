@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static cz.tul.ppj.Helper.initializeState;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -36,13 +35,13 @@ public class StateRestTest {
     WebTestClient client;
 
     @Before
-    public void setUp() {
+    public void init() {
         client = WebTestClient.bindToServer().baseUrl("http://localhost:" + port + "/api").build();
         stateService.deleteAll();
     }
 
-    private final State state1 = initializeState("CZ", "Czechia");
-    private final State state2 = initializeState("GE", "Georgia");
+    private final State state1 = new State("CZ", "Czechia");
+    private final State state2 = new State("GE", "Georgia");
 
     @Test
     public void testCreate() {
@@ -126,6 +125,19 @@ public class StateRestTest {
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus().isNotFound();
+    }
+
+    @Test
+    public void testDeleteAll() {
+        stateService.createBulk(new ArrayList<>(Arrays.asList(state1, state2)));
+
+        client.delete().uri("/states")
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isOk();
+
+        var states = stateService.getAll();
+        assertTrue("Everything should be deleted.", states.isEmpty());
     }
 
 }

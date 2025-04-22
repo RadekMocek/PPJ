@@ -77,4 +77,15 @@ public class City {
         return Objects.hash(cityId, state, name);
     }
 
+    //
+
+    public City() {
+    }
+
+    public City(int cityId, State state, String name) {
+        this.cityId = cityId;
+        this.state = state;
+        this.name = name;
+    }
+
 }

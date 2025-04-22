@@ -61,4 +61,14 @@ public class State {
         return Objects.hash(stateId, name);
     }
 
+    //
+
+    public State() {
+    }
+
+    public State(String stateId, String name) {
+        this.stateId = stateId;
+        this.name = name;
+    }
+
 }

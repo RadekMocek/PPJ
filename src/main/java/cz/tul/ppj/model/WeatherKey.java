@@ -53,4 +53,15 @@ public class WeatherKey implements Serializable {
     public int hashCode() {
         return Objects.hash(timestamp, city);
     }
+
+    //
+
+    public WeatherKey() {
+    }
+
+    public WeatherKey(long timestamp, City city) {
+        this.timestamp = timestamp;
+        this.city = city;
+    }
+
 }
