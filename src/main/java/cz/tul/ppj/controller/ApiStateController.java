@@ -23,8 +23,9 @@ public class ApiStateController {
     @PutMapping("/states")
     public ResponseEntity<?> createState(@RequestBody State state) {
         if (stateService.exists(state.getStateId())) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error message.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("State '" + state.getStateId() + "' already exists.");
         } else {
+            state.setStateId(state.getStateId().toUpperCase());
             stateService.create(state);
             return ResponseEntity.status(HttpStatus.CREATED).body(state);
         }
@@ -42,7 +43,7 @@ public class ApiStateController {
             stateService.updateOrCreate(state);
             return ResponseEntity.status(HttpStatus.OK).body(state);
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error message.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("State '" + state.getStateId() + "' does not exist.");
         }
     }
 
@@ -50,10 +51,16 @@ public class ApiStateController {
     public ResponseEntity<?> deleteState(@PathVariable("stateid") String stateId) {
         if (stateService.exists(stateId)) {
             stateService.delete(stateId);
-            return ResponseEntity.status(HttpStatus.OK).body("Success message.");
+            return ResponseEntity.status(HttpStatus.OK).body("State '" + stateId + "' deleted.");
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error message.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("State '" + stateId + "' does not exist.");
         }
+    }
+
+    @DeleteMapping("/states")
+    public ResponseEntity<?> deleteAll() {
+        stateService.deleteAll();
+        return ResponseEntity.status(HttpStatus.OK).body("Deleted everything.");
     }
 
 }

@@ -1,6 +1,12 @@
+:root {
+    --color-ok: #7a882e;
+    --color-err: #743e4c;
+}
+
 body {
     width: 90%;
     margin: 0 auto;
+    font-family: Consolas,monaco,monospace;
 }
 
 main {
@@ -12,14 +18,38 @@ fieldset {
     border-right: none;
 }
 
-#s-country {
+#section-country {
     width: 25%;
 }
 
-#s-city {
+#section-city {
     width: 25%;
 }
 
-#s-weather {
+#section-weather {
     width: 50%;
+}
+
+.response-ok {
+    color: var(--color-ok);
+}
+
+.response-err {
+    color: var(--color-err);
+}
+
+table {
+    width: 95%;
+    border-collapse: collapse;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+table th, table td {
+    text-align: left;
+    padding: 0.4em;
 }

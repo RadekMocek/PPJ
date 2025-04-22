@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>States</title>
+</head>
+<body>
+    <div th:fragment="statesList" id="list-country">
+        <table>
+            <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>Name</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="state : ${statesList}">
+                    <td th:text="${state.stateId}"></td>
+                    <td th:text="${state.name}"></td>
+                    <td>Edit, Delete</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
