@@ -77,7 +77,14 @@
         <div id="response-city-ok" class="response-ok">&nbsp;</div>
         <div id="response-city-err" class="response-err">&nbsp;</div>
         <br>
-        <button>DELETE ALL (WIP)</button>
+        <button hx-delete="/api/cities"
+                hx-target="#response-city-ok"
+                hx-confirm="This will delete all cities and all weather reports.&#10;&#10;Are you sure?"
+                hx-on::before-request="clearResponseMessages();"
+                hx-on::after-request="refreshCityList();"
+        >
+            DELETE ALL
+        </button>
         <button
                 hx-put="/api/cities/testing"
                 hx-target="#response-city-ok"

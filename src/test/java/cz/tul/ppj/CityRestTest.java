@@ -21,6 +21,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
@@ -145,6 +146,41 @@ public class CityRestTest {
         assertThat(cities)
                 .hasSize(4)
                 .containsExactlyInAnyOrder(city11, city12, city21, city22);
+    }
+
+    @Test
+    public void testDelete() {
+        stateService.create(state1);
+        cityService.createBulk(new ArrayList<>(Arrays.asList(city11, city12)));
+
+        client.delete().uri("/cities/" + state1.getStateId() + "/" + city11.getName())
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isOk();
+
+        var retrieved = cityService.get(city12.getCityKey());
+        assertTrue("Inserted state retrieval should not return null.", retrieved.isPresent());
+        retrieved = cityService.get(city11.getCityKey());
+        assertFalse("Deleted state retrieval should return null.", retrieved.isPresent());
+
+        client.delete().uri("/cities/" + state1.getStateId() + "/" + city11.getName())
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isNotFound();
+    }
+
+    @Test
+    public void testDeleteAll() {
+        stateService.createBulk(new ArrayList<>(Arrays.asList(state1, state2)));
+        cityService.createBulk(new ArrayList<>(Arrays.asList(city11, city12, city21, city22)));
+
+        client.delete().uri("/cities")
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isOk();
+
+        var cities = cityService.getAll();
+        assertTrue("All cities should be deleted.", cities.isEmpty());
     }
 
 }

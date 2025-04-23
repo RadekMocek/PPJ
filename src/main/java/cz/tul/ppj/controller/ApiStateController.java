@@ -44,11 +44,13 @@ public class ApiStateController {
 
     @PatchMapping("/states")
     public ResponseEntity<?> updateState(@RequestBody State state) {
-        if (stateService.exists(state.getStateId())) {
+        if (StringUtils.isBlank(state.getStateId()) || StringUtils.isBlank(state.getName())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("State's ID and name cannot be blank.");
+        } else if (!stateService.exists(state.getStateId())) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("State '" + state.getStateId() + "' does not exist.");
+        } else {
             stateService.updateOrCreate(state);
             return ResponseEntity.status(HttpStatus.OK).body(state);
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("State '" + state.getStateId() + "' does not exist.");
         }
     }
 

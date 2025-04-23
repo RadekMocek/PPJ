@@ -1,6 +1,7 @@
 package cz.tul.ppj.controller;
 
 import cz.tul.ppj.model.City;
+import cz.tul.ppj.model.CityKey;
 import cz.tul.ppj.model.State;
 import cz.tul.ppj.model.dto.CityDTO;
 import cz.tul.ppj.service.jpa.CityService;
@@ -57,6 +58,27 @@ public class ApiCityController {
     public ResponseEntity<List<City>> getAllCities() {
         var cities = cityService.getAll();
         return ResponseEntity.status(HttpStatus.OK).body(cities);
+    }
+
+    @DeleteMapping("/cities/{stateid}/{cityname}")
+    public ResponseEntity<?> deleteCity(@PathVariable("stateid") String stateId, @PathVariable("cityname") String cityName) {
+        var state = stateService.get(stateId);
+        if (state.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Non-existent state shouldn't have any cities :/.");
+        }
+        var cityKey = new CityKey(state.get(), cityName);
+        if (cityService.exists(cityKey)) {
+            cityService.delete(cityKey);
+            return ResponseEntity.status(HttpStatus.OK).body("City '" + stateId + ", " + cityName + "' deleted.");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("City '" + stateId + ", " + cityName + "' does not exist.");
+        }
+    }
+
+    @DeleteMapping("/cities")
+    public ResponseEntity<?> deleteAll() {
+        cityService.deleteAll();
+        return ResponseEntity.status(HttpStatus.OK).body("Deleted all cities.");
     }
 
     //

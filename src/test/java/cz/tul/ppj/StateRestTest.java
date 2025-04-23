@@ -108,6 +108,18 @@ public class StateRestTest {
     }
 
     @Test
+    public void testUpdateBlank() {
+        stateService.create(state1);
+        state1.setName(" ");
+        client.patch().uri("/states")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(state1)
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isBadRequest();
+    }
+
+    @Test
     public void testDelete() {
         stateService.createBulk(new ArrayList<>(Arrays.asList(state1, state2)));
 
