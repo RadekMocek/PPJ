@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <link th:href="@{/styles/css.css}" rel="stylesheet"/>
+    <link th:href="@{/styles/modal.css}" rel="stylesheet"/>
     <title>😏 Weather</title>
     <script src="https://unpkg.com/htmx.org@2.0.4"></script>
     <script src="https://unpkg.com/htmx.org/dist/ext/json-enc.js"></script>
     <script src="https://unpkg.com/htmx-ext-response-targets@2.0.2"></script>
     <script th:src="@{/scripts/js.js}"></script>
+    <script th:src="@{/scripts/modal.js}"></script>
 </head>
 
 <body hx-ext="response-targets">
@@ -87,6 +89,31 @@
         </form>
     </section>
 </main>
+
+<!-- Country edit modal -->
+<div id="modal-country" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Edit country</h3>
+            <span id="modal-country-close" class="close">&times;</span>
+        </div>
+        <form
+                hx-patch="/api/states"
+                hx-ext="json-enc"
+                hx-target="#response-country-ok"
+                hx-target-error="#response-country-err"
+                hx-on::before-request="clearResponseMessages();"
+                hx-on::after-request="closeModals();refreshCountryList();"
+        >
+            <label for="country-edit-code">Country code:</label>
+            <input type="text" id="country-edit-code" name="stateId" maxlength="2"
+                   oninput="this.value = this.value.toUpperCase();" required readonly><br><br>
+            <label for="country-edit-name">Country name:</label>
+            <input type="text" id="country-edit-name" name="name" required><br><br>
+            <button type="submit">Update</button>
+        </form>
+    </div>
+</div>
 
 </body>
 </html>

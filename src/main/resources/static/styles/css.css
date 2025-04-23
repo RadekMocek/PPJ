@@ -63,3 +63,7 @@ table td span:hover {
     text-decoration: underline;
     cursor: pointer;
 }
+
+input:read-only {
+    cursor: not-allowed;
+}
