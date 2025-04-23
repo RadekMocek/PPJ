@@ -11,7 +11,13 @@ public class WeatherKey implements Serializable {
     private long timestamp;
 
     @ManyToOne(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "cityid", foreignKey = @ForeignKey(name = "FK_WEATHER_CITY"))
+    @JoinColumns(
+            value = {
+                    @JoinColumn(name = "state"),
+                    @JoinColumn(name = "name")
+            },
+            foreignKey = @ForeignKey(name = "FK_WEATHER_CITY")
+    )
     private City city;
 
     //
@@ -26,10 +32,6 @@ public class WeatherKey implements Serializable {
 
     public City getCity() {
         return city;
-    }
-
-    public int getCityId() {
-        return city.getCityId();
     }
 
     public String getCityName() {

@@ -1,9 +1,6 @@
 package cz.tul.ppj;
 
-import cz.tul.ppj.model.City;
-import cz.tul.ppj.model.State;
-import cz.tul.ppj.model.Weather;
-import cz.tul.ppj.model.WeatherKey;
+import cz.tul.ppj.model.*;
 import cz.tul.ppj.service.jpa.CityService;
 import cz.tul.ppj.service.jpa.StateService;
 import cz.tul.ppj.service.jpa.WeatherService;
@@ -41,10 +38,10 @@ public class WeatherCrudTest {
 
     private final State state1 = new State("CZ", "Czechia");
     private final State state2 = new State("GE", "Georgia");
-    private final City city11 = new City(3067696, state1, "Prague");
-    private final City city12 = new City(3071961, state1, "Liberec");
-    private final City city21 = new City(611717, state2, "Tbilisi");
-    private final City city22 = new City(615532, state2, "Batumi");
+    private final City city11 = new City(new CityKey(state1, "Prague"));
+    private final City city12 = new City(new CityKey(state1, "Liberec"));
+    private final City city21 = new City(new CityKey(state2, "Tbilisi"));
+    private final City city22 = new City(new CityKey(state2, "Batumi"));
     private final Weather weather111 = new Weather(1745157600, city11, 294.96f, 294.58f, 1006, 53, "scattered clouds");
     private final Weather weather112 = new Weather(1745240400, city11, 291.38f, 290.85f, 1011, 61, "broken clouds");
     private final Weather weather121 = new Weather(1745157600, city12, 293.57f, 292.89f, 1007, 47, "clear sky");
@@ -139,11 +136,11 @@ public class WeatherCrudTest {
         weatherService.create(weather111);
         weatherService.create(weather211);
         weatherService.create(weather212);
-        var result1 = weatherService.getByCityId(city11.getCityId());
+        var result1 = weatherService.getByStateIdAndCityName(city11.getStateId(), city11.getName());
         assertEquals("There should be one weather for this cityId.", 1, result1.size());
-        var result2 = weatherService.getByCityId(city21.getCityId());
+        var result2 = weatherService.getByStateIdAndCityName(city21.getStateId(), city21.getName());
         assertEquals("There should be two weathers for this cityId.", 2, result2.size());
-        var result0 = weatherService.getByCityId(-1);
+        var result0 = weatherService.getByStateIdAndCityName("123456789", "123456789");
         assertTrue("There should be no weathers for made up cityId.", result0.isEmpty());
     }
 

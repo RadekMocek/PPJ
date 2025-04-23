@@ -1,6 +1,7 @@
 package cz.tul.ppj.service.jpa;
 
 import cz.tul.ppj.model.City;
+import cz.tul.ppj.model.CityKey;
 import cz.tul.ppj.repository.CityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,12 +24,12 @@ public class CityService {
         cityRepository.saveAll(cities);
     }
 
-    public boolean exists(int cityId) {
-        return cityRepository.existsById(cityId);
+    public boolean exists(CityKey cityKey) {
+        return cityRepository.existsById(cityKey);
     }
 
-    public Optional<City> get(int cityId) {
-        return cityRepository.findById(cityId);
+    public Optional<City> get(CityKey cityKey) {
+        return cityRepository.findById(cityKey);
     }
 
     public List<City> getAll() {
@@ -39,8 +40,8 @@ public class CityService {
         cityRepository.save(city);
     }
 
-    public void delete(int cityId) {
-        cityRepository.deleteById(cityId);
+    public void delete(CityKey cityKey) {
+        cityRepository.deleteById(cityKey);
     }
 
     public void deleteAll() {

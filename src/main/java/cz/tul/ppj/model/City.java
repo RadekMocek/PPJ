@@ -1,7 +1,10 @@
 package cz.tul.ppj.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
+import jakarta.persistence.EmbeddedId;
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 import java.util.Objects;
 import java.util.Set;
@@ -10,16 +13,8 @@ import java.util.Set;
 @Table(name = "City")
 public class City {
 
-    @Id
-    @Column(name = "id")
-    private int cityId;
-
-    @ManyToOne(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "stateid", foreignKey = @ForeignKey(name = "FK_CITY_STATE"))
-    private State state;
-
-    @Column(name = "name")
-    private String name;
+    @EmbeddedId
+    private CityKey cityKey;
 
     @JsonIgnore
     @OneToMany(mappedBy = "weatherKey.city", orphanRemoval = true)
@@ -27,32 +22,32 @@ public class City {
 
     //
 
-    public int getCityId() {
-        return cityId;
+    public CityKey getCityKey() {
+        return cityKey;
     }
 
-    public void setCityId(int cityId) {
-        this.cityId = cityId;
+    public void setCityKey(CityKey cityKey) {
+        this.cityKey = cityKey;
     }
 
     public State getState() {
-        return state;
+        return cityKey.getState();
     }
 
     public String getStateId() {
-        return state.getStateId();
+        return cityKey.getState().getStateId();
     }
 
     public void setState(State state) {
-        this.state = state;
+        cityKey.setState(state);
     }
 
     public String getName() {
-        return name;
+        return cityKey.getName();
     }
 
     public void setName(String name) {
-        this.name = name;
+        cityKey.setName(name);
     }
 
     //
@@ -61,12 +56,12 @@ public class City {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         City city = (City) o;
-        return cityId == city.cityId && Objects.equals(state, city.state) && Objects.equals(name, city.name);
+        return Objects.equals(cityKey, city.cityKey);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(cityId, state, name);
+        return Objects.hashCode(cityKey);
     }
 
     //
@@ -74,10 +69,8 @@ public class City {
     public City() {
     }
 
-    public City(int cityId, State state, String name) {
-        this.cityId = cityId;
-        this.state = state;
-        this.name = name;
+    public City(CityKey cityKey) {
+        this.cityKey = cityKey;
     }
 
 }

@@ -51,10 +51,6 @@ public class Weather {
         return weatherKey.getCity();
     }
 
-    public int getCityId() {
-        return weatherKey.getCityId();
-    }
-
     public String getCityName() {
         return weatherKey.getCityName();
     }

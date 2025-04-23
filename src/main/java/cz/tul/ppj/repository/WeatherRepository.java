@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface WeatherRepository extends ListCrudRepository<Weather, WeatherKey> {
 
-    @Query("SELECT w FROM Weather AS w WHERE w.weatherKey.city.cityId = :cityId")
-    List<Weather> findByCityId(@Param("cityId") int cityId);
+    @Query("SELECT w FROM Weather AS w WHERE w.weatherKey.city.cityKey.state.stateId = :stateId AND w.weatherKey.city.cityKey.name = :cityName")
+    List<Weather> findByStateIdAndCityName(@Param("stateId") String stateId, @Param("cityName") String cityName);
 
 }

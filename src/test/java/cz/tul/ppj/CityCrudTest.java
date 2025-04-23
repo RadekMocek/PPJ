@@ -1,6 +1,7 @@
 package cz.tul.ppj;
 
 import cz.tul.ppj.model.City;
+import cz.tul.ppj.model.CityKey;
 import cz.tul.ppj.model.State;
 import cz.tul.ppj.service.jpa.CityService;
 import cz.tul.ppj.service.jpa.StateService;
@@ -35,10 +36,11 @@ public class CityCrudTest {
 
     private final State state1 = new State("CZ", "Czechia");
     private final State state2 = new State("GE", "Georgia");
-    private final City city11 = new City(3067696, state1, "Prague");
-    private final City city12 = new City(3071961, state1, "Liberec");
-    private final City city21 = new City(611717, state2, "Tbilisi");
-    private final City city22 = new City(615532, state2, "Batumi");
+    private final City city11 = new City(new CityKey(state1, "Prague"));
+    private final City city12 = new City(new CityKey(state1, "Liberec"));
+    private final City city21 = new City(new CityKey(state2, "Tbilisi"));
+    private final City city22 = new City(new CityKey(state2, "Batumi"));
+    private final City fakeCity = new City(new CityKey(new State("BL", "Bajookieland"), "Brongulus"));
 
     @Test
     public void testCreateAndGetAll() {
@@ -57,13 +59,13 @@ public class CityCrudTest {
         var cities = cityService.getAll();
         var nCities = cities.size();
         assertEquals("Four cities should have been created.", 4, nCities);
-        var retrieved11 = cityService.get(city11.getCityId());
+        var retrieved11 = cityService.get(city11.getCityKey());
         assertTrue("Inserted city retrieval should not return null.", retrieved11.isPresent());
         assertEquals("Inserted city should match the retrieved one.", city11, retrieved11.get());
-        var retrieved22 = cityService.get(city22.getCityId());
+        var retrieved22 = cityService.get(city22.getCityKey());
         assertTrue("Inserted city retrieval should not return null.", retrieved22.isPresent());
         assertEquals("Inserted city should match the retrieved one.", city22, retrieved22.get());
-        var retrievedNull = cityService.get(-1);
+        var retrievedNull = cityService.get(fakeCity.getCityKey());
         assertFalse("Made up city retrieval should return null.", retrievedNull.isPresent());
     }
 
@@ -71,8 +73,8 @@ public class CityCrudTest {
     public void testExists() {
         stateService.create(state1);
         cityService.create(city11);
-        assertTrue("Inserted city should exist.", cityService.exists(city11.getCityId()));
-        assertFalse("Made up city should not exist.", cityService.exists(-1));
+        assertTrue("Inserted city should exist.", cityService.exists(city11.getCityKey()));
+        assertFalse("Made up city should not exist.", cityService.exists(fakeCity.getCityKey()));
     }
 
     @Test
@@ -81,7 +83,7 @@ public class CityCrudTest {
         cityService.create(city11);
         city11.setName("Braha");
         cityService.updateOrCreate(city11);
-        var retrieved = cityService.get(city11.getCityId());
+        var retrieved = cityService.get(city11.getCityKey());
         assertTrue("Updated city should not be null.", retrieved.isPresent());
         assertEquals("Retrieved city should be updated.", retrieved.get(), city11);
     }
@@ -90,10 +92,10 @@ public class CityCrudTest {
     public void testDelete() {
         stateService.create(state1);
         cityService.create(city11);
-        var retrieved = cityService.get(city11.getCityId());
+        var retrieved = cityService.get(city11.getCityKey());
         assertTrue("Inserted city retrieval should not be null.", retrieved.isPresent());
-        cityService.delete(city11.getCityId());
-        retrieved = cityService.get(city11.getCityId());
+        cityService.delete(city11.getCityKey());
+        retrieved = cityService.get(city11.getCityKey());
         assertFalse("Deleted city retrieval should be null.", retrieved.isPresent());
     }
 
@@ -101,10 +103,10 @@ public class CityCrudTest {
     public void testDeleteCascade() {
         stateService.create(state1);
         cityService.create(city11);
-        var retrieved = cityService.get(city11.getCityId());
+        var retrieved = cityService.get(city11.getCityKey());
         assertTrue("Inserted city retrieval should not be null.", retrieved.isPresent());
         stateService.delete(state1.getStateId());
-        retrieved = cityService.get(city11.getCityId());
+        retrieved = cityService.get(city11.getCityKey());
         assertFalse("Deleted city retrieval should be null.", retrieved.isPresent());
     }
 

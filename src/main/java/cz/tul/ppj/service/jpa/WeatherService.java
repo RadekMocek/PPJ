@@ -49,8 +49,8 @@ public class WeatherService {
 
     //
 
-    public List<Weather> getByCityId(int cityId) {
-        return weatherRepository.findByCityId(cityId);
+    public List<Weather> getByStateIdAndCityName(String stateId, String cityName) {
+        return weatherRepository.findByStateIdAndCityName(stateId, cityName);
     }
 
 }

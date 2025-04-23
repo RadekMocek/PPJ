@@ -1,8 +1,6 @@
 package cz.tul.ppj.service;
 
-import cz.tul.ppj.model.City;
-import cz.tul.ppj.model.Weather;
-import cz.tul.ppj.model.WeatherKey;
+import cz.tul.ppj.model.*;
 import cz.tul.ppj.service.jpa.WeatherService;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -34,16 +32,7 @@ public class WeatherFetcher {
     public void fetchWeatherDataAndStoreToDatabase() {
         String cityCountry = "London,GB";
 
-        String response = webClientBuilder
-                .baseUrl(API_URL)
-                .build()
-                .get()
-                .uri(uriBuilder -> uriBuilder.path("history/city")
-                        .queryParam("q", cityCountry)
-                        .queryParam("appid", API_KEY).build())
-                .retrieve()
-                .bodyToMono(String.class)
-                .block();
+        String response = webClientBuilder.baseUrl(API_URL).build().get().uri(uriBuilder -> uriBuilder.path("history/city").queryParam("q", cityCountry).queryParam("appid", API_KEY).build()).retrieve().bodyToMono(String.class).block();
 
         var weatherReports = JSONStringToWeathers(response);
 
@@ -78,8 +67,14 @@ public class WeatherFetcher {
             var weatherKey = new WeatherKey();
             weatherReportToAdd.setWeatherKey(weatherKey);
             weatherReportToAdd.setTimestamp(dt);
+            var state = new State();
+            state.setStateId("GB");
+            state.setName("gbname");
+            var cityKey = new CityKey();
+            cityKey.setState(state);
+            cityKey.setName("London");
             City city = new City();
-            city.setCityId(city_id);
+            city.setCityKey(cityKey);
             weatherReportToAdd.setCity(city);
             weatherReportToAdd.setTemperature(temp);
             weatherReportToAdd.setFeelsLike(feels_like);
