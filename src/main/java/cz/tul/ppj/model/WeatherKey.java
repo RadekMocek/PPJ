@@ -11,7 +11,7 @@ public class WeatherKey implements Serializable {
     private long timestamp;
 
     @ManyToOne(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "cityid")
+    @JoinColumn(name = "cityid", foreignKey = @ForeignKey(name = "FK_WEATHER_CITY"))
     private City city;
 
     //

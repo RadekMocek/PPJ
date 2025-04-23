@@ -140,4 +140,26 @@ public class StateRestTest {
         assertTrue("Everything should be deleted.", states.isEmpty());
     }
 
+    @Test
+    public void testCreateBlank() {
+        client.put().uri("/states")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(new State(" ", " "))
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isBadRequest();
+    }
+
+    //
+
+    @Test
+    public void testStateIdAutoUppercase() {
+        client.put().uri("/states")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(new State("cz", "Czechia"))
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isCreated()
+                .expectBody(State.class).value(result -> assertThat(result).isEqualTo(new State("CZ", "Czechia")));
+    }
 }

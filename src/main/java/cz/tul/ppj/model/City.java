@@ -15,7 +15,7 @@ public class City {
     private int cityId;
 
     @ManyToOne(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "stateid")
+    @JoinColumn(name = "stateid", foreignKey = @ForeignKey(name = "FK_CITY_STATE"))
     private State state;
 
     @Column(name = "name")
@@ -53,14 +53,6 @@ public class City {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Set<Weather> getWeathers() {
-        return weathers;
-    }
-
-    public void setWeathers(Set<Weather> weathers) {
-        this.weathers = weathers;
     }
 
     //

@@ -2,6 +2,7 @@ package cz.tul.ppj.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
 import java.util.Objects;
 import java.util.Set;
@@ -11,9 +12,11 @@ import java.util.Set;
 public class State {
 
     @Id
+    @NotBlank
     @Column(name = "id")
     private String stateId;
 
+    @NotBlank
     @Column(name = "name")
     private String name;
 
@@ -37,14 +40,6 @@ public class State {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Set<City> getCities() {
-        return cities;
-    }
-
-    public void setCities(Set<City> cities) {
-        this.cities = cities;
     }
 
     //

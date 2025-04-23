@@ -124,4 +124,9 @@ public class CityCrudTest {
         assertTrue("There should be no cities for made up stateId.", result0.isEmpty());
     }
 
+    @Test(expected = Exception.class)
+    public void testReferentialIntegrity() {
+        cityService.create(city11);
+    }
+
 }

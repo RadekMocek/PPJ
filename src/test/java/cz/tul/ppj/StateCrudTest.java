@@ -83,4 +83,9 @@ public class StateCrudTest {
         assertFalse("Deleted state retrieval should return null.", retrieved.isPresent());
     }
 
+    @Test(expected = Exception.class)
+    public void testNotBlank() {
+        stateService.create(new State(" ", " "));
+    }
+
 }

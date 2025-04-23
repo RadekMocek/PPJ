@@ -146,4 +146,10 @@ public class WeatherCrudTest {
         var result0 = weatherService.getByCityId(-1);
         assertTrue("There should be no weathers for made up cityId.", result0.isEmpty());
     }
+
+    @Test(expected = Exception.class)
+    public void testReferentialIntegrity() {
+        weatherService.create(weather111);
+    }
+
 }
