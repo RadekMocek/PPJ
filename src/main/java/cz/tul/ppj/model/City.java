@@ -30,10 +30,12 @@ public class City {
         this.cityKey = cityKey;
     }
 
+    @JsonIgnore
     public State getState() {
         return cityKey.getState();
     }
 
+    @JsonIgnore
     public String getStateId() {
         return cityKey.getState().getStateId();
     }
@@ -42,6 +44,7 @@ public class City {
         cityKey.setState(state);
     }
 
+    @JsonIgnore
     public String getName() {
         return cityKey.getName();
     }

@@ -34,7 +34,7 @@
                         hx-target="#response-country-ok"
                         hx-target-error="#response-country-err"
                         hx-on::before-request="clearResponseMessages();"
-                        hx-on::after-request="refreshCountryList();"
+                        hx-on::after-request="refreshCountryList();refreshCityList();"
                 >
                     Delete
                 </span>

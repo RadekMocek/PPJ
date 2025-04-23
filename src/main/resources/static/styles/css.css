@@ -2,6 +2,7 @@
     --color-ok: #7a882e;
     --color-err: #743e4c;
     --color-click: #204e8a;
+    --color-zebra: #f2f2f2;
 }
 
 body {
@@ -46,8 +47,12 @@ table {
     margin-right: auto;
 }
 
+table thead {
+    border-bottom: 2px solid var(--color-zebra);
+}
+
 table tr:nth-child(even) {
-    background-color: #f2f2f2;
+    background-color: var(--color-zebra);
 }
 
 table th, table td {

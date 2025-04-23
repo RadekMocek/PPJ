@@ -18,7 +18,7 @@
         </thead>
         <tbody>
         <tr th:each="city : ${citiesList}">
-            <td th:text="${state.cityKey.state.stateid}"></td>
+            <td th:text="${city.cityKey.state.stateId}"></td>
             <td th:text="${city.cityKey.name}"></td>
             <td>Edit | Delete</td>
         </tr>

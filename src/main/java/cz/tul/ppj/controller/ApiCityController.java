@@ -2,9 +2,9 @@ package cz.tul.ppj.controller;
 
 import cz.tul.ppj.model.City;
 import cz.tul.ppj.model.State;
+import cz.tul.ppj.model.dto.CityDTO;
 import cz.tul.ppj.service.jpa.CityService;
 import cz.tul.ppj.service.jpa.StateService;
-import io.micrometer.common.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,17 +32,25 @@ public class ApiCityController {
     }
 
     @PutMapping("/cities")
-    public ResponseEntity<?> createCity(@RequestBody City city) {
-        if (StringUtils.isBlank(city.getStateId()) || StringUtils.isBlank(city.getName())) {
+    public ResponseEntity<?> createCity(@RequestBody CityDTO cityDTO) {
+        if (cityDTO.isAnyMemberBlank()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("City's stateID and name cannot be blank.");
-        } else if (!stateService.exists(city.getStateId())) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Cannot create city for non-existent state.");
-        } else if (cityService.exists(city.getCityKey())) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("City '" + city + "' already exists.");
-        } else {
-            cityService.create(city);
-            return ResponseEntity.status(HttpStatus.CREATED).body(city);
         }
+
+        cityDTO.setStateId(cityDTO.getStateId().toUpperCase());
+
+        var state = stateService.get(cityDTO.getStateId());
+        if (state.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Cannot create city for non-existent state.");
+        }
+
+        var city = new City(state.get(), cityDTO.getCityName());
+        if (cityService.exists(city.getCityKey())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("City '" + city + "' already exists.");
+        }
+
+        cityService.create(city);
+        return ResponseEntity.status(HttpStatus.CREATED).body(city);
     }
 
     @GetMapping("/cities")
@@ -55,8 +63,17 @@ public class ApiCityController {
 
     @PutMapping("/cities/testing")
     public ResponseEntity<?> createTestingData() {
-        // TODO
-        return ResponseEntity.status(HttpStatus.CREATED).body("Added countries for testing.");
+        var state1 = new State("CZ", "Czechia");
+        var state2 = new State("ES", "Spain");
+        var state3 = new State("GE", "Georgia");
+        if (!stateService.exists(state1.getStateId()) || !stateService.exists(state2.getStateId()) || !stateService.exists(state3.getStateId())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Add testing countries first.");
+        }
+        var city1 = new City(state1, "Liberec");
+        var city2 = new City(state2, "Madrid");
+        var city3 = new City(state3, "Tbilisi");
+        cityService.createBulk(new ArrayList<>(Arrays.asList(city1, city2, city3)));
+        return ResponseEntity.status(HttpStatus.CREATED).body("Added cities for testing.");
     }
 
 }

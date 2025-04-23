@@ -1,8 +1,8 @@
 package cz.tul.ppj;
 
 import cz.tul.ppj.model.City;
-import cz.tul.ppj.model.CityKey;
 import cz.tul.ppj.model.State;
+import cz.tul.ppj.model.dto.CityDTO;
 import cz.tul.ppj.service.jpa.CityService;
 import cz.tul.ppj.service.jpa.StateService;
 import org.junit.Before;
@@ -21,6 +21,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = {PpjApplication.class})
@@ -50,6 +51,76 @@ public class CityRestTest {
     private final City city12 = new City(state1, "Liberec");
     private final City city21 = new City(state2, "Tbilisi");
     private final City city22 = new City(state2, "Batumi");
+
+    @Test
+    public void testCreate() {
+        stateService.create(state1);
+
+        var cityDTO11 = new CityDTO();
+        cityDTO11.setStateId(city11.getStateId());
+        cityDTO11.setCityName(city11.getName());
+
+        client.put().uri("/cities")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(cityDTO11)
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isCreated()
+                .expectBody(City.class).value(result -> assertThat(result).isEqualTo(city11));
+
+        assertTrue("Inserted city should exist.", cityService.exists(city11.getCityKey()));
+
+        client.put().uri("/cities")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(cityDTO11)
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isBadRequest();
+    }
+
+    @Test
+    public void testReferentialIntegrity() {
+        // Not creating state1 here
+        var cityDTO11 = new CityDTO();
+        cityDTO11.setStateId(city11.getStateId());
+        cityDTO11.setCityName(city11.getName());
+
+        client.put().uri("/cities")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(cityDTO11)
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isBadRequest();
+    }
+
+    @Test
+    public void testCreateBlank() {
+        stateService.create(state1);
+        var cityDTO = new CityDTO();
+        cityDTO.setStateId(city11.getStateId());
+        cityDTO.setCityName(" ");
+        client.put().uri("/cities")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(cityDTO)
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isBadRequest();
+    }
+
+    @Test
+    public void testStateIdAutoUppercase() {
+        stateService.create(state1);
+        var cityDTO11 = new CityDTO();
+        cityDTO11.setStateId(city11.getStateId().toLowerCase());
+        cityDTO11.setCityName(city11.getName());
+        client.put().uri("/cities")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(cityDTO11)
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isCreated()
+                .expectBody(City.class).value(result -> assertThat(result).isEqualTo(city11));
+    }
 
     @Test
     public void testGetEmpty() {

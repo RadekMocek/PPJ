@@ -45,15 +45,15 @@
                 hx-target="#response-country-ok"
                 hx-confirm="This will delete EVERYTHING due to cascade.&#10;&#10;Are you sure?"
                 hx-on::before-request="clearResponseMessages();"
-                hx-on::after-request="refreshCountryList();"
+                hx-on::after-request="refreshCountryList();refreshCityList();"
         >
             DELETE ALL
         </button>
         <button
-            hx-put="/api/states/testing"
-            hx-target="#response-country-ok"
-            hx-on::before-request="clearResponseMessages();"
-            hx-on::after-request="refreshCountryList();"
+                hx-put="/api/states/testing"
+                hx-target="#response-country-ok"
+                hx-on::before-request="clearResponseMessages();"
+                hx-on::after-request="refreshCountryList();"
         >
             Add testing data
         </button>
@@ -78,7 +78,15 @@
         <div id="response-city-err" class="response-err">&nbsp;</div>
         <br>
         <button>DELETE ALL (WIP)</button>
-        <button>Add testing data (WIP)</button>
+        <button
+                hx-put="/api/cities/testing"
+                hx-target="#response-city-ok"
+                hx-target-error="#response-city-err"
+                hx-on::before-request="clearResponseMessages();"
+                hx-on::after-request="refreshCityList();"
+        >
+            Add testing data
+        </button>
         <div id="list-city" hx-get="/web/cities" hx-swap="innerHTML" hx-trigger="refreshCityEvent"></div>
     </section>
     <!-- Weather reports -->
