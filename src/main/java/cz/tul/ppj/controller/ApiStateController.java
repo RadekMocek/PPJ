@@ -25,13 +25,11 @@ public class ApiStateController {
 
     @PutMapping("/states")
     public ResponseEntity<?> createState(@RequestBody State state) {
-        if (stateService.exists(state.getStateId())) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("State '" + state.getStateId() + "' already exists.");
-        }
-        else if (StringUtils.isBlank(state.getStateId()) || StringUtils.isBlank(state.getName())) {
+        if (StringUtils.isBlank(state.getStateId()) || StringUtils.isBlank(state.getName())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("State's ID and name cannot be blank.");
-        }
-        else {
+        } else if (stateService.exists(state.getStateId())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("State '" + state.getStateId() + "' already exists.");
+        } else {
             state.setStateId(state.getStateId().toUpperCase());
             stateService.create(state);
             return ResponseEntity.status(HttpStatus.CREATED).body(state);

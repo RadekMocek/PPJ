@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cities</title>
+</head>
+<body>
+
+<div th:fragment="citiesList">
+    <br>
+    <table>
+        <thead>
+        <tr>
+            <th>CC</th>
+            <th>City name</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="city : ${citiesList}">
+            <td th:text="${state.cityKey.state.stateid}"></td>
+            <td th:text="${city.cityKey.name}"></td>
+            <td>Edit | Delete</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

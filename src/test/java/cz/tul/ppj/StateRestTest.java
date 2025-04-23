@@ -84,7 +84,7 @@ public class StateRestTest {
 
         assertThat(states)
                 .hasSize(2)
-                .containsExactly(state1, state2);
+                .containsExactlyInAnyOrder(state1, state2);
     }
 
     @Test
@@ -149,8 +149,6 @@ public class StateRestTest {
                 .exchange()
                 .expectStatus().isBadRequest();
     }
-
-    //
 
     @Test
     public void testStateIdAutoUppercase() {

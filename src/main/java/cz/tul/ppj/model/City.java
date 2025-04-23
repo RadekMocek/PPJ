@@ -73,4 +73,15 @@ public class City {
         this.cityKey = cityKey;
     }
 
+    public City(State state, String name) {
+        this.cityKey = new CityKey(state, name);
+    }
+
+    //
+
+    @Override
+    public String toString() {
+        return getStateId() + ", " + getName();
+    }
+
 }

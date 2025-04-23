@@ -38,10 +38,10 @@ public class WeatherCrudTest {
 
     private final State state1 = new State("CZ", "Czechia");
     private final State state2 = new State("GE", "Georgia");
-    private final City city11 = new City(new CityKey(state1, "Prague"));
-    private final City city12 = new City(new CityKey(state1, "Liberec"));
-    private final City city21 = new City(new CityKey(state2, "Tbilisi"));
-    private final City city22 = new City(new CityKey(state2, "Batumi"));
+    private final City city11 = new City(state1, "Prague");
+    private final City city12 = new City(state1, "Liberec");
+    private final City city21 = new City(state2, "Tbilisi");
+    private final City city22 = new City(state2, "Batumi");
     private final Weather weather111 = new Weather(1745157600, city11, 294.96f, 294.58f, 1006, 53, "scattered clouds");
     private final Weather weather112 = new Weather(1745240400, city11, 291.38f, 290.85f, 1011, 61, "broken clouds");
     private final Weather weather121 = new Weather(1745157600, city12, 293.57f, 292.89f, 1007, 47, "clear sky");

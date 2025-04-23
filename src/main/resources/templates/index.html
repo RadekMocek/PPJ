@@ -73,6 +73,13 @@
                 <input type="submit" value="Submit">
             </fieldset>
         </form>
+        <br>
+        <div id="response-city-ok" class="response-ok">&nbsp;</div>
+        <div id="response-city-err" class="response-err">&nbsp;</div>
+        <br>
+        <button>DELETE ALL (WIP)</button>
+        <button>Add testing data (WIP)</button>
+        <div id="list-city" hx-get="/web/cities" hx-swap="innerHTML" hx-trigger="refreshCityEvent"></div>
     </section>
     <!-- Weather reports -->
     <section id="section-weather">
@@ -87,6 +94,15 @@
                 <input type="submit" value="Submit">
             </fieldset>
         </form>
+        <br>
+        <div id="response-weather-ok" class="response-ok">&nbsp;</div>
+        <div id="response-weather-err" class="response-err">&nbsp;</div>
+        <br>
+        <button>DELETE ALL (WIP)</button>
+        <button>Add testing data (WIP)</button>
+        <!--
+        <div id="list-weather" hx-get="/web/weathers" hx-swap="innerHTML" hx-trigger="refreshWeatherEvent"></div>
+        -->
     </section>
 </main>
 

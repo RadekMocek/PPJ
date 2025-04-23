@@ -1,6 +1,7 @@
 package cz.tul.ppj.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -12,6 +13,7 @@ public class CityKey implements Serializable {
     @JoinColumn(name = "stateid", foreignKey = @ForeignKey(name = "FK_CITY_STATE"))
     private State state;
 
+    @NotBlank
     @Column(name = "name")
     private String name;
 
