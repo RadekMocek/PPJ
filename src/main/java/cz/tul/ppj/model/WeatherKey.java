@@ -7,6 +7,7 @@ import java.util.Objects;
 
 @Embeddable
 public class WeatherKey implements Serializable {
+
     @Column(name = "timestamp")
     private long timestamp;
 

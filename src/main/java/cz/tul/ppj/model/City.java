@@ -5,6 +5,7 @@ import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.Valid;
 
 import java.util.Objects;
 import java.util.Set;
@@ -13,6 +14,7 @@ import java.util.Set;
 @Table(name = "City")
 public class City {
 
+    @Valid
     @EmbeddedId
     private CityKey cityKey;
 

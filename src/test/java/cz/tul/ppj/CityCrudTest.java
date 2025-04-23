@@ -131,12 +131,10 @@ public class CityCrudTest {
         cityService.create(city11);
     }
 
-    /*
     @Test(expected = Exception.class)
     public void testNotBlank() {
         stateService.create(state1);
         cityService.create(new City(state1, " "));
     }
-    /**/
 
 }
