@@ -62,15 +62,21 @@
     <!-- Cities -->
     <section id="section-city">
         <h2>Cities</h2>
-        <form>
+        <form hx-put="/api/cities"
+              hx-ext="json-enc"
+              hx-target="#response-city-ok"
+              hx-target-error="#response-city-err"
+              hx-on::before-request="clearResponseMessages();"
+              hx-on::after-request="this.reset();refreshCityList();"
+        >
             <fieldset>
                 <legend>Add city</legend>
                 <label for="city-add-code">Country code:</label>
-                <input type="text" id="city-add-code" maxlength="2"
-                       oninput="this.value = this.value.toUpperCase();"><br><br>
+                <input type="text" id="city-add-code" name="stateId" maxlength="2"
+                       oninput="this.value = this.value.toUpperCase();" required><br><br>
                 <label for="city-add-name">&nbsp;&nbsp;&nbsp;City name:</label>
-                <input type="text" id="city-add-name"><br><br>
-                <input type="submit" value="Submit">
+                <input type="text" id="city-add-name" name="cityName" required><br><br>
+                <button type="submit">Create</button>
             </fieldset>
         </form>
         <br>
@@ -106,7 +112,7 @@
                 <input type="text" id="weather-add-code"><br><br>
                 <label for="weather-add-timestamp">Timestamp:</label>
                 <input type="text" id="weather-add-timestamp"><br><br>
-                <input type="submit" value="Submit">
+                <button type="submit">Submit</button>
             </fieldset>
         </form>
         <br>

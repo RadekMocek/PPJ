@@ -20,7 +20,16 @@
         <tr th:each="city : ${citiesList}">
             <td th:text="${city.cityKey.state.stateId}"></td>
             <td th:text="${city.cityKey.name}"></td>
-            <td>Edit | Delete</td>
+            <td><span
+                    th:hx-delete="@{/api/cities/{sid}/{cin}(sid=${city.cityKey.state.stateId},cin=${city.cityKey.name})}"
+                    hx-confirm="This will delete the city and ALL of its weather reports.&#10;&#10;Are you sure?"
+                    hx-target="#response-city-ok"
+                    hx-target-error="#response-city-err"
+                    hx-on::before-request="clearResponseMessages();"
+                    hx-on::after-request="refreshCityList();"
+            >
+                Delete
+            </span></td>
         </tr>
         </tbody>
     </table>
