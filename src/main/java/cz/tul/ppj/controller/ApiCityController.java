@@ -61,7 +61,8 @@ public class ApiCityController {
     }
 
     @DeleteMapping("/cities/{stateid}/{cityname}")
-    public ResponseEntity<?> deleteCity(@PathVariable("stateid") String stateId, @PathVariable("cityname") String cityName) {
+    public ResponseEntity<?> deleteCity(@PathVariable("stateid") String stateIdRaw, @PathVariable("cityname") String cityName) {
+        var stateId = stateIdRaw.toUpperCase();
         var state = stateService.get(stateId);
         if (state.isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Non-existent state shouldn't have any cities :/.");

@@ -46,7 +46,9 @@ public class ApiStateController {
     public ResponseEntity<?> updateState(@RequestBody State state) {
         if (StringUtils.isBlank(state.getStateId()) || StringUtils.isBlank(state.getName())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("State's ID and name cannot be blank.");
-        } else if (!stateService.exists(state.getStateId())) {
+        }
+        state.setStateId(state.getStateId().toUpperCase());
+        if (!stateService.exists(state.getStateId())) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("State '" + state.getStateId() + "' does not exist.");
         } else {
             stateService.updateOrCreate(state);
@@ -55,7 +57,8 @@ public class ApiStateController {
     }
 
     @DeleteMapping("/states/{stateid}")
-    public ResponseEntity<?> deleteState(@PathVariable("stateid") String stateId) {
+    public ResponseEntity<?> deleteState(@PathVariable("stateid") String stateIdRaw) {
+        var stateId = stateIdRaw.toUpperCase();
         if (stateService.exists(stateId)) {
             stateService.delete(stateId);
             return ResponseEntity.status(HttpStatus.OK).body("State '" + stateId + "' deleted.");
