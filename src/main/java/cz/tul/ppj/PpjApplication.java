@@ -14,28 +14,9 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class PpjApplication {
 
     public static void main(String[] args) {
-
         SpringApplication app = new SpringApplication(PpjApplication.class);
         ApplicationContext ctx = app.run(args);
-
-        WeatherFetcher weatherFetcher = ctx.getBean(WeatherFetcher.class);
-
-        StateService stateService = ctx.getBean(StateService.class);
-        CityService cityService = ctx.getBean(CityService.class);
-        WeatherService weatherService = ctx.getBean(WeatherService.class);
-
-        // Deletes
-        //stateService.deleteAll(); // Delete everything (cascade)
-        //weatherService.deleteAll();
-
-        // Download and store weather reports from API
-        //weatherFetcher.fetchWeatherDataAndStoreToDatabase();
-
-        // Print all stored weathers
-        //System.out.println(weatherService.getAll());
-
-        //
-        System.out.println("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
+        System.out.println("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
     }
 
     @Bean

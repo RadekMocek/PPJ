@@ -15,13 +15,14 @@ document.addEventListener("DOMContentLoaded", () => {
     refreshWeatherList();
 });
 
-const clearResponseMessages = () => {
+const clearResponseMessages = (source) => {
     countryResponseOk.innerHTML = "&nbsp;";
     countryResponseErr.innerHTML = "&nbsp;";
     cityResponseOk.innerHTML = "&nbsp;";
     cityResponseErr.innerHTML = "&nbsp;";
     weatherResponseOk.innerHTML = "&nbsp;";
     weatherResponseErr.innerHTML = "&nbsp;";
+    //console.log("cleanin' from " + source);
 };
 
 const refreshCountryList = () => {

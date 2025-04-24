@@ -2,7 +2,7 @@ package cz.tul.ppj.service.jpa;
 
 import cz.tul.ppj.model.City;
 import cz.tul.ppj.model.CityKey;
-import cz.tul.ppj.repository.CityRepository;
+import cz.tul.ppj.service.repository.CityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

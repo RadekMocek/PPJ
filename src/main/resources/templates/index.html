@@ -24,7 +24,7 @@
               hx-ext="json-enc"
               hx-target="#response-country-ok"
               hx-target-error="#response-country-err"
-              hx-on::before-request="clearResponseMessages();"
+              hx-on::before-request="clearResponseMessages('country-create');"
               hx-on::after-request="this.reset();refreshCountryList();"
         >
             <fieldset>
@@ -44,7 +44,7 @@
         <button hx-delete="/api/states"
                 hx-target="#response-country-ok"
                 hx-confirm="This will delete EVERYTHING due to cascade.&#10;&#10;Are you sure?"
-                hx-on::before-request="clearResponseMessages();"
+                hx-on::before-request="clearResponseMessages('country-delall');"
                 hx-on::after-request="refreshCountryList();refreshCityList();"
         >
             DELETE ALL
@@ -52,7 +52,7 @@
         <button
                 hx-put="/api/states/testing"
                 hx-target="#response-country-ok"
-                hx-on::before-request="clearResponseMessages();"
+                hx-on::before-request="clearResponseMessages('country-sample');"
                 hx-on::after-request="refreshCountryList();"
         >
             Add testing data
@@ -66,7 +66,7 @@
               hx-ext="json-enc"
               hx-target="#response-city-ok"
               hx-target-error="#response-city-err"
-              hx-on::before-request="clearResponseMessages();"
+              hx-on::before-request="clearResponseMessages('city-create');"
               hx-on::after-request="this.reset();refreshCityList();"
         >
             <fieldset>
@@ -86,7 +86,7 @@
         <button hx-delete="/api/cities"
                 hx-target="#response-city-ok"
                 hx-confirm="This will delete all cities and all weather reports.&#10;&#10;Are you sure?"
-                hx-on::before-request="clearResponseMessages();"
+                hx-on::before-request="clearResponseMessages('city-delall');"
                 hx-on::after-request="refreshCityList();refreshWeatherList();"
         >
             DELETE ALL
@@ -95,7 +95,7 @@
                 hx-put="/api/cities/testing"
                 hx-target="#response-city-ok"
                 hx-target-error="#response-city-err"
-                hx-on::before-request="clearResponseMessages();"
+                hx-on::before-request="clearResponseMessages('city-sample');"
                 hx-on::after-request="refreshCityList();"
         >
             Add testing data
@@ -109,21 +109,24 @@
               hx-ext="json-enc"
               hx-target="#response-weather-ok"
               hx-target-error="#response-weather-err"
-              hx-on::before-request="clearResponseMessages();"
-              hx-on::after-request="refreshWeatherList();"
+              hx-on::before-request="if (event.detail.requestConfig.verb === 'put') { clearResponseMessages('weather-create'); }"
+              hx-on::after-request="if (event.detail.requestConfig.verb === 'put') { refreshWeatherList(); }"
         >
             <fieldset>
                 <legend>Add weather report</legend>
-                <div id="select-city" hx-get="/web/cities/select"
-                     hx-swap="innerHTML" hx-trigger="refreshCityEvent" hx-target="this"></div>
+                <div id="select-city"
+                     hx-get="/web/cities/select"
+                     hx-swap="innerHTML"
+                     hx-trigger="refreshCityEvent"
+                     hx-target="this"></div>
                 <br>
-                <label for="weather-add-datestamp">Date:</label>
+                <label for="weather-add-datestamp">Start date:</label>
                 <input type="date"
                        id="weather-add-datestamp"
                        name="datestamp"
                        value="2025-04-01"
                        min="2021-01-01"
-                       max="2025-05-11"/>
+                       max="2025-05-01"/>
                 <label for="weather-add-ndays">&emsp; Days (1–7):</label>
                 <input type="number" id="weather-add-ndays" name="nDays" min="1" max="7" value="1"/>
                 <br><br>
@@ -152,7 +155,7 @@
                 hx-ext="json-enc"
                 hx-target="#response-country-ok"
                 hx-target-error="#response-country-err"
-                hx-on::before-request="clearResponseMessages();"
+                hx-on::before-request="clearResponseMessages('country-edit');"
                 hx-on::after-request="closeModals();refreshCountryList();"
         >
             <label for="country-edit-code">Country code:</label>

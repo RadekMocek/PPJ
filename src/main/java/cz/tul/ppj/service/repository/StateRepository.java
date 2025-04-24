@@ -1,4 +1,4 @@
-package cz.tul.ppj.repository;
+package cz.tul.ppj.service.repository;
 
 import cz.tul.ppj.model.State;
 import org.springframework.data.repository.ListCrudRepository;

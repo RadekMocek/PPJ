@@ -1,4 +1,4 @@
-package cz.tul.ppj.repository;
+package cz.tul.ppj.service.repository;
 
 import cz.tul.ppj.model.City;
 import cz.tul.ppj.model.CityKey;

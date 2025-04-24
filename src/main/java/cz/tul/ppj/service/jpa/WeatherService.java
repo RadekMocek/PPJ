@@ -2,7 +2,7 @@ package cz.tul.ppj.service.jpa;
 
 import cz.tul.ppj.model.Weather;
 import cz.tul.ppj.model.WeatherKey;
-import cz.tul.ppj.repository.WeatherRepository;
+import cz.tul.ppj.service.repository.WeatherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
