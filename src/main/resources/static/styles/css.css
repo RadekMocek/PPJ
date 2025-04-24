@@ -8,7 +8,7 @@
 body {
     width: 90%;
     margin: 0 auto;
-    font-family: Consolas,monaco,monospace;
+    font-family: Consolas, monaco, monospace;
 }
 
 main {
@@ -71,4 +71,21 @@ table td span:hover {
 
 input:read-only {
     cursor: not-allowed;
+}
+
+#loading-indicator {
+    color: red;
+    font-weight: bold;
+}
+
+.htmx-indicator {
+    opacity: 0;
+}
+
+.htmx-request .htmx-indicator {
+    opacity: 1;
+}
+
+.htmx-request.htmx-indicator {
+    opacity: 1;
 }

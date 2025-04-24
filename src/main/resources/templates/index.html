@@ -111,6 +111,8 @@
               hx-target-error="#response-weather-err"
               hx-on::before-request="if (event.detail.requestConfig.verb === 'put') { clearResponseMessages('weather-create'); }"
               hx-on::after-request="if (event.detail.requestConfig.verb === 'put') { refreshWeatherList(); }"
+              hx-indicator="#loading-indicator"
+              hx-disabled-elt="find button"
         >
             <fieldset>
                 <legend>Add weather report</legend>
@@ -131,6 +133,7 @@
                 <input type="number" id="weather-add-ndays" name="nDays" min="1" max="7" value="1"/>
                 <br><br>
                 <button type="submit">Download</button>
+                <span id="loading-indicator" class="htmx-indicator">LOADING</span>
             </fieldset>
         </form>
         <br>
