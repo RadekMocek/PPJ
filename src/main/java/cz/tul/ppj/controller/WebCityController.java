@@ -20,14 +20,14 @@ public class WebCityController {
 
     @GetMapping("/cities")
     public String getCitiesList(Model model) {
-        var citiesList = cityService.getAll();
+        var citiesList = cityService.getAllSorted();
         model.addAttribute("citiesList", citiesList);
         return "cities :: citiesList";
     }
 
     @GetMapping("/cities/select")
     public String getCitiesSelect(Model model) {
-        var citiesList = cityService.getAll();
+        var citiesList = cityService.getAllSorted();
         model.addAttribute("citiesList", citiesList);
         return "cities :: citiesSelect";
     }

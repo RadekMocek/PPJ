@@ -40,8 +40,11 @@ public class WeatherFetchDTO {
     //
 
     @JsonIgnore
-    public boolean isValid() {
-        return !StringUtils.isBlank(citySelect) && !StringUtils.isBlank(datestamp) && nDays >= 1 && nDays <= 7;
+    public String getErrorMessage() {
+        if (StringUtils.isBlank(citySelect)) return "Select a city first.";
+        if (StringUtils.isBlank(datestamp)) return "Date must be in YYYY-MM-DD format.";
+        if (nDays < 1 || nDays > 7) return "Days must be a number between 1 and 7.";
+        return null;
     }
 
 }

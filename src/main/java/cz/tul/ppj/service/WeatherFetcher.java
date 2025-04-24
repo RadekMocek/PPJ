@@ -29,17 +29,31 @@ public class WeatherFetcher {
 
     //
 
-    public void fetchWeatherDataAndStoreToDatabase() {
-        String cityCountry = "London,GB";
+    public String fetchWeatherDataAndStoreToDatabase(String location, long timestamp, int nDays) {
 
-        String response = webClientBuilder.baseUrl(API_URL).build().get().uri(uriBuilder -> uriBuilder.path("history/city").queryParam("q", cityCountry).queryParam("appid", API_KEY).build()).retrieve().bodyToMono(String.class).block();
+        int nHours = 1 + (24 * (nDays - 1));
 
-        var weatherReports = JSONStringToWeathers(response);
+        log.info("WF :: Got fetch request for location={}, timestamp={}, nDays={} ({} hours). Calling OpenWeatherMap API...",
+                location, timestamp, nDays, nHours);
 
-        weatherService.createBulk(weatherReports);
-
-        log.info("WeatherFetcher :: fetchWeatherDataAndStoreToDatabase OK");
+        return webClientBuilder
+                .baseUrl(API_URL)
+                .build()
+                .get()
+                .uri(uriBuilder -> uriBuilder
+                        .path("history/city")
+                        .queryParam("q", location)
+                        .queryParam("type", "hour")
+                        .queryParam("appid", API_KEY)
+                        .queryParam("start", timestamp)
+                        .queryParam("cnt", nHours)
+                        .build())
+                .retrieve()
+                .bodyToMono(String.class)
+                .block();
     }
+
+    //
 
     private List<Weather> JSONStringToWeathers(String raw) {
         var result = new ArrayList<Weather>();

@@ -40,7 +40,7 @@
     <select id="city-select" name="citySelect" class="form-control">
         <option value="">— Select a city —</option>
         <option th:each="city : ${citiesList}"
-                th:value="${city.cityKey.state.stateId + ',' + city.cityKey.name}"
+                th:value="${city.cityKey.name + ',' + city.cityKey.state.stateId}"
                 th:text="${city.cityKey.state.stateId + ', ' + city.cityKey.name}">
         </option>
     </select>

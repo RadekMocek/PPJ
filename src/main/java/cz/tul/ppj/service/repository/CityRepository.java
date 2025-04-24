@@ -15,4 +15,7 @@ public interface CityRepository extends ListCrudRepository<City, CityKey> {
     @Query("SELECT c FROM City AS c WHERE c.cityKey.state.stateId = :stateId")
     List<City> findByStateId(@Param("stateId") String stateId);
 
+    @Query("SELECT c FROM City AS c ORDER BY c.cityKey.state.stateId ASC, c.cityKey.name ASC")
+    List<City> findAllSorted();
+
 }

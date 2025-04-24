@@ -46,7 +46,7 @@ public class CityCrudTest {
     public void testCreateAndGetAll() {
         stateService.create(state1);
         cityService.create(city11);
-        var cities = cityService.getAll();
+        var cities = cityService.getAllSorted();
         var nCities = cities.size();
         assertEquals("One city should have been created.", 1, nCities);
         assertEquals("Inserted city should match the retrieved one.", city11, cities.getFirst());
@@ -56,7 +56,7 @@ public class CityCrudTest {
     public void testCreateBulkAndGet() {
         stateService.createBulk(new ArrayList<>(Arrays.asList(state1, state2)));
         cityService.createBulk(new ArrayList<>(Arrays.asList(city11, city12, city21, city22, city11 /*intentional duplicate*/)));
-        var cities = cityService.getAll();
+        var cities = cityService.getAllSorted();
         var nCities = cities.size();
         assertEquals("Four cities should have been created.", 4, nCities);
         var retrieved11 = cityService.get(city11.getCityKey());

@@ -56,7 +56,7 @@ public class ApiCityController {
 
     @GetMapping("/cities")
     public ResponseEntity<List<City>> getAllCities() {
-        var cities = cityService.getAll();
+        var cities = cityService.getAllSorted();
         return ResponseEntity.status(HttpStatus.OK).body(cities);
     }
 

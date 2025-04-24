@@ -179,7 +179,7 @@ public class CityRestTest {
                 .exchange()
                 .expectStatus().isOk();
 
-        var cities = cityService.getAll();
+        var cities = cityService.getAllSorted();
         assertTrue("All cities should be deleted.", cities.isEmpty());
     }
 

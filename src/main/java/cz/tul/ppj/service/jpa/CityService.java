@@ -36,6 +36,10 @@ public class CityService {
         return cityRepository.findAll();
     }
 
+    public List<City> getAllSorted() {
+        return cityRepository.findAllSorted();
+    }
+
     public void updateOrCreate(City city) {
         cityRepository.save(city);
     }
