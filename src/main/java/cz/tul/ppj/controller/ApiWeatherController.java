@@ -74,10 +74,17 @@ public class ApiWeatherController {
         }
     }
 
-    @GetMapping("/weathers")
+    @GetMapping("/weathers/summary")
     public ResponseEntity<?> getWeathers() {
-        //
-        return ResponseEntity.status(HttpStatus.OK).body("WIP");
+        var weatherSummary = weatherService.countWeathersByEachCity();
+        return ResponseEntity.status(HttpStatus.OK).body(weatherSummary);
+    }
+
+    @DeleteMapping("/weathers/{stateid}/{cityname}")
+    public ResponseEntity<?> deleteCity(@PathVariable("stateid") String stateIdRaw, @PathVariable("cityname") String cityName) {
+        var stateId = stateIdRaw.toUpperCase();
+        weatherService.deleteByStateIdAndCityName(stateId, cityName);
+        return ResponseEntity.status(HttpStatus.OK).body("Deleted all weather reports for '" + stateId + ", " + cityName + "'.");
     }
 
     @DeleteMapping("/weathers")

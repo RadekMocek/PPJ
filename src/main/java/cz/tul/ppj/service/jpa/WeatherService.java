@@ -3,6 +3,7 @@ package cz.tul.ppj.service.jpa;
 import cz.tul.ppj.model.Weather;
 import cz.tul.ppj.model.WeatherKey;
 import cz.tul.ppj.service.repository.WeatherRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -51,6 +52,15 @@ public class WeatherService {
 
     public List<Weather> getByStateIdAndCityName(String stateId, String cityName) {
         return weatherRepository.findByStateIdAndCityName(stateId, cityName);
+    }
+
+    public List<WeatherRepository.CityWeatherSummary> countWeathersByEachCity() {
+        return weatherRepository.countWeathersByEachCity();
+    }
+
+    @Transactional
+    public void deleteByStateIdAndCityName(String stateId, String cityName) {
+        weatherRepository.deleteByStateIdAndCityName(stateId, cityName);
     }
 
 }

@@ -13,6 +13,7 @@ body {
 
 main {
     display: flex;
+    justify-content: space-evenly;
 }
 
 fieldset {
@@ -21,15 +22,15 @@ fieldset {
 }
 
 #section-country {
-    width: 25%;
+    width: 30%;
 }
 
 #section-city {
-    width: 25%;
+    width: 30%;
 }
 
 #section-weather {
-    width: 50%;
+    width: 30%;
 }
 
 .response-ok {

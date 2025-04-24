@@ -45,7 +45,7 @@
                 hx-target="#response-country-ok"
                 hx-confirm="This will delete EVERYTHING due to cascade.&#10;&#10;Are you sure?"
                 hx-on::before-request="clearResponseMessages('country-delall');"
-                hx-on::after-request="refreshCountryList();refreshCityList();"
+                hx-on::after-request="refreshCountryList();refreshCityList();refreshWeatherList();"
         >
             DELETE ALL
         </button>
@@ -148,7 +148,7 @@
         >
             DELETE ALL
         </button>
-        <div id="list-weather" hx-get="/web/weathers" hx-swap="innerHTML" hx-trigger="refreshWeatherEvent"></div>
+        <div id="list-weather" hx-get="/web/weathers/summary" hx-swap="innerHTML" hx-trigger="refreshWeatherEvent"></div>
     </section>
 </main>
 

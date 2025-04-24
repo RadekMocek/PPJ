@@ -18,11 +18,11 @@ public class WebWeatherController {
         this.weatherService = weatherService;
     }
 
-    @GetMapping("/weathers")
+    @GetMapping("/weathers/summary")
     public String getCitiesList(Model model) {
-        var weathersList = weatherService.getAll();
-        model.addAttribute("weathersListLen", weathersList.size());
-        return "weathers :: weathersList";
+        var weatherSummary = weatherService.countWeathersByEachCity();
+        model.addAttribute("weatherSummary", weatherSummary);
+        return "weathers :: weatherSummary";
     }
 
 }

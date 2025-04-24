@@ -6,9 +6,35 @@
 </head>
 <body>
 
-<div th:fragment="weathersList">
-    WIP...
-    <p th:text="${weathersListLen}"></p>
+<div th:fragment="weatherSummary">
+    <br>
+    <table>
+        <thead>
+        <tr>
+            <th>CC</th>
+            <th>City name</th>
+            <th>No. of reports</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item : ${weatherSummary}">
+            <td th:text="${item.stateId}"></td>
+            <td th:text="${item.cityName}"></td>
+            <td th:text="${item.weatherCount}"></td>
+            <td><span
+                    th:hx-delete="@{/api/weathers/{sid}/{cin}(sid=${item.stateId},cin=${item.cityName})}"
+                    hx-confirm="This will delete ALL weather reports for selected city.&#10;&#10;Are you sure?"
+                    hx-target="#response-weather-ok"
+                    hx-target-error="#response-weather-err"
+                    hx-on::before-request="clearResponseMessages('weather-summary-delete');"
+                    hx-on::after-request="refreshWeatherList();"
+            >
+                Delete
+            </span></td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 
 </body>
