@@ -25,4 +25,11 @@ public class WebCityController {
         return "cities :: citiesList";
     }
 
+    @GetMapping("/cities/select")
+    public String getCitiesSelect(Model model) {
+        var citiesList = cityService.getAll();
+        model.addAttribute("citiesList", citiesList);
+        return "cities :: citiesSelect";
+    }
+
 }

@@ -26,13 +26,24 @@
                     hx-target="#response-city-ok"
                     hx-target-error="#response-city-err"
                     hx-on::before-request="clearResponseMessages();"
-                    hx-on::after-request="refreshCityList();"
+                    hx-on::after-request="refreshCityList();refreshWeatherList();"
             >
                 Delete
             </span></td>
         </tr>
         </tbody>
     </table>
+</div>
+
+<div th:fragment="citiesSelect">
+    <label for="city-select">City:</label>
+    <select id="city-select" name="citySelect" class="form-control">
+        <option value="">— Select a city —</option>
+        <option th:each="city : ${citiesList}"
+                th:value="${city.cityKey.state.stateId + ',' + city.cityKey.name}"
+                th:text="${city.cityKey.state.stateId + ', ' + city.cityKey.name}">
+        </option>
+    </select>
 </div>
 
 </body>

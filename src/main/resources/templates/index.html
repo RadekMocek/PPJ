@@ -87,7 +87,7 @@
                 hx-target="#response-city-ok"
                 hx-confirm="This will delete all cities and all weather reports.&#10;&#10;Are you sure?"
                 hx-on::before-request="clearResponseMessages();"
-                hx-on::after-request="refreshCityList();"
+                hx-on::after-request="refreshCityList();refreshWeatherList();"
         >
             DELETE ALL
         </button>
@@ -105,14 +105,29 @@
     <!-- Weather reports -->
     <section id="section-weather">
         <h2>Weather reports</h2>
-        <form>
+        <form hx-put="/api/weathers"
+              hx-ext="json-enc"
+              hx-target="#response-weather-ok"
+              hx-target-error="#response-weather-err"
+              hx-on::before-request="clearResponseMessages();"
+              hx-on::after-request="refreshWeatherList();"
+        >
             <fieldset>
                 <legend>Add weather report</legend>
-                <label for="weather-add-code">City code:</label>
-                <input type="text" id="weather-add-code"><br><br>
-                <label for="weather-add-timestamp">Timestamp:</label>
-                <input type="text" id="weather-add-timestamp"><br><br>
-                <button type="submit">Submit</button>
+                <div id="select-city" hx-get="/web/cities/select"
+                     hx-swap="innerHTML" hx-trigger="refreshCityEvent" hx-target="this"></div>
+                <br>
+                <label for="weather-add-datestamp">Date:</label>
+                <input type="date"
+                       id="weather-add-datestamp"
+                       name="datestamp"
+                       value="2025-04-01"
+                       min="2021-01-01"
+                       max="2025-05-11"/>
+                <label for="weather-add-ndays">&emsp; Days (1–7):</label>
+                <input type="number" id="weather-add-ndays" name="nDays" min="1" max="7" value="1"/>
+                <br><br>
+                <button type="submit">Download</button>
             </fieldset>
         </form>
         <br>
@@ -121,9 +136,7 @@
         <br>
         <button>DELETE ALL (WIP)</button>
         <button>Add testing data (WIP)</button>
-        <!--
         <div id="list-weather" hx-get="/web/weathers" hx-swap="innerHTML" hx-trigger="refreshWeatherEvent"></div>
-        -->
     </section>
 </main>
 

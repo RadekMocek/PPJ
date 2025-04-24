@@ -30,6 +30,7 @@ const refreshCountryList = () => {
 
 const refreshCityList = () => {
     htmx.trigger("#list-city", "refreshCityEvent");
+    htmx.trigger("#select-city", "refreshCityEvent");
 };
 
 const refreshWeatherList = () => {
