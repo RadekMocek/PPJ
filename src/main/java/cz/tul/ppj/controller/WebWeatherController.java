@@ -1,5 +1,7 @@
 package cz.tul.ppj.controller;
 
+import cz.tul.ppj.service.jpa.WeatherService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,8 +11,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/web")
 public class WebWeatherController {
 
+    private WeatherService weatherService;
+
+    @Autowired
+    public void setWeatherService(WeatherService weatherService) {
+        this.weatherService = weatherService;
+    }
+
     @GetMapping("/weathers")
     public String getCitiesList(Model model) {
+        var weathersList = weatherService.getAll();
+        model.addAttribute("weathersListLen", weathersList.size());
         return "weathers :: weathersList";
     }
 

@@ -137,8 +137,14 @@
         <div id="response-weather-ok" class="response-ok">&nbsp;</div>
         <div id="response-weather-err" class="response-err">&nbsp;</div>
         <br>
-        <button>DELETE ALL (WIP)</button>
-        <button>Add testing data (WIP)</button>
+        <button hx-delete="/api/weathers"
+                hx-target="#response-weather-ok"
+                hx-confirm="This will all weather reports.&#10;&#10;Are you sure?"
+                hx-on::before-request="clearResponseMessages('weather-delall');"
+                hx-on::after-request="refreshWeatherList();"
+        >
+            DELETE ALL
+        </button>
         <div id="list-weather" hx-get="/web/weathers" hx-swap="innerHTML" hx-trigger="refreshWeatherEvent"></div>
     </section>
 </main>
