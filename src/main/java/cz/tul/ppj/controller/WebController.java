@@ -11,4 +11,14 @@ public class WebController {
         return "index";
     }
 
+    @GetMapping("/reports")
+    public String reportsPage() {
+        return "reports";
+    }
+
+    @GetMapping("/averages")
+    public String averagesPage() {
+        return "averages";
+    }
+
 }

@@ -16,6 +16,25 @@ main {
     justify-content: space-evenly;
 }
 
+nav a {
+    padding: 0.5em;
+}
+
+nav a[href] {
+    color: var(--color-click);
+    text-decoration: none;
+}
+
+nav a[href]:hover {
+    background-color: var(--color-zebra);
+    text-decoration: underline;
+}
+
+nav a:not([href]) {
+    background-color: black;
+    color: white;
+}
+
 fieldset {
     border-left: none;
     border-right: none;
