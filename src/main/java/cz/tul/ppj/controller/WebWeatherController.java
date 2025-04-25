@@ -22,7 +22,7 @@ public class WebWeatherController {
     public String getCitiesList(Model model) {
         var weatherSummary = weatherService.countWeathersByEachCity();
         model.addAttribute("weatherSummary", weatherSummary);
-        return "weathers :: weatherSummary";
+        return "fragments/weathers :: weatherSummary";
     }
 
 }

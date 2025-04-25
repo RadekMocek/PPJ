@@ -22,7 +22,7 @@ public class WebStateController {
     public String getStatesList(Model model) {
         var statesList = stateService.getAll();
         model.addAttribute("statesList", statesList);
-        return "states :: statesList";
+        return "fragments/states :: statesList";
     }
 
 }
