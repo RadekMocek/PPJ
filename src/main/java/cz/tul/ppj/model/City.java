@@ -1,10 +1,7 @@
 package cz.tul.ppj.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.EmbeddedId;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.Valid;
 
 import java.util.Objects;
@@ -19,7 +16,7 @@ public class City {
     private CityKey cityKey;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "weatherKey.city", orphanRemoval = true)
+    @OneToMany(mappedBy = "weatherKey.city", orphanRemoval = true, cascade = CascadeType.REMOVE)
     private Set<Weather> weathers;
 
     //

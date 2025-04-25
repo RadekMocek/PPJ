@@ -21,7 +21,7 @@ public class State {
     private String name;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "cityKey.state", orphanRemoval = true)
+    @OneToMany(mappedBy = "cityKey.state", orphanRemoval = true, cascade = CascadeType.REMOVE)
     private Set<City> cities;
 
     //

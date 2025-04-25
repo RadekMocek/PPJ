@@ -18,4 +18,6 @@ public interface CityRepository extends ListCrudRepository<City, CityKey> {
     @Query("SELECT c FROM City AS c ORDER BY c.cityKey.state.stateId ASC, c.cityKey.name ASC")
     List<City> findAllSorted();
 
+    void deleteByCityKey_State_StateIdAndCityKey_Name(String stateId, String cityName);
+
 }

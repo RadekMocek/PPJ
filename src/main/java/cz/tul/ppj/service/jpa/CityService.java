@@ -3,6 +3,7 @@ package cz.tul.ppj.service.jpa;
 import cz.tul.ppj.model.City;
 import cz.tul.ppj.model.CityKey;
 import cz.tul.ppj.service.repository.CityRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -57,5 +58,10 @@ public class CityService {
     public List<City> getByStateId(String stateId) {
         if (stateId == null) return new ArrayList<>();
         return cityRepository.findByStateId(stateId);
+    }
+
+    @Transactional
+    public void deleteByStateIdAndCityName(String stateId, String cityName) {
+        cityRepository.deleteByCityKey_State_StateIdAndCityKey_Name(stateId, cityName);
     }
 }

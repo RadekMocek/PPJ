@@ -9,7 +9,7 @@ import java.util.Objects;
 @Embeddable
 public class CityKey implements Serializable {
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne//(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "stateid", foreignKey = @ForeignKey(name = "FK_CITY_STATE"))
     private State state;
 
