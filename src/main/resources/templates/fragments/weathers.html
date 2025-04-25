@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
+
 <body>
 
 <div th:fragment="weatherAll">
@@ -30,7 +31,20 @@
             <td th:text="${item.pressure}">Pressure</td>
             <td th:text="${item.humidity}">Humidity</td>
             <td th:text="${item.description}">Description</td>
-            <td>Delete</td>
+            <td><span
+                th:hx-delete="@{/api/weathers/{sid}/{cin}/{tst}(
+                sid=${item.weatherKey.city.cityKey.state.stateId},
+                cin=${item.weatherKey.city.cityKey.name},
+                tst=${item.weatherKey.timestamp}
+                )}"
+                hx-confirm="Are you sure you want to delete this weather report?"
+                hx-target="#response-reports-ok"
+                hx-target-error="#response-reports-err"
+                hx-on::before-request="clearResponseMessages('report-delete');"
+                hx-on::after-request="refreshReportsList();"
+            >
+                Delete
+            </span></td>
         </tr>
         </tbody>
     </table>
@@ -68,4 +82,5 @@
 </div>
 
 </body>
+
 </html>

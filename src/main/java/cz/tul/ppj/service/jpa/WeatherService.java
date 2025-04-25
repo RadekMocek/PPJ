@@ -63,4 +63,9 @@ public class WeatherService {
         weatherRepository.deleteByStateIdAndCityName(stateId, cityName);
     }
 
+    @Transactional
+    public void deleteByStateIdAndCityNameAndTimestamp(String stateId, String cityName, long timestamp) {
+        weatherRepository.deleteByStateIdAndCityNameAndTimestamp(stateId, cityName, timestamp);
+    }
+
 }

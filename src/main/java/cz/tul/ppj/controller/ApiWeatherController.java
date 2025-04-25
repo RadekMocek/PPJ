@@ -86,8 +86,15 @@ public class ApiWeatherController {
         return ResponseEntity.status(HttpStatus.OK).body(weatherSummary);
     }
 
+    @DeleteMapping("/weathers/{stateid}/{cityname}/{timestamp}")
+    public ResponseEntity<?> deleteWeather(@PathVariable("stateid") String stateIdRaw, @PathVariable("cityname") String cityName, @PathVariable("timestamp") long timestamp) {
+        var stateId = stateIdRaw.toUpperCase();
+        weatherService.deleteByStateIdAndCityNameAndTimestamp(stateId, cityName, timestamp);
+        return ResponseEntity.status(HttpStatus.OK).body("Deleted weather report '" + stateId + ", " + cityName + " @ " + timestamp + "'.");
+    }
+
     @DeleteMapping("/weathers/{stateid}/{cityname}")
-    public ResponseEntity<?> deleteCity(@PathVariable("stateid") String stateIdRaw, @PathVariable("cityname") String cityName) {
+    public ResponseEntity<?> deleteWeatherSummary(@PathVariable("stateid") String stateIdRaw, @PathVariable("cityname") String cityName) {
         var stateId = stateIdRaw.toUpperCase();
         weatherService.deleteByStateIdAndCityName(stateId, cityName);
         return ResponseEntity.status(HttpStatus.OK).body("Deleted all weather reports for '" + stateId + ", " + cityName + "'.");
