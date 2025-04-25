@@ -27,7 +27,8 @@ public interface WeatherRepository extends ListCrudRepository<Weather, WeatherKe
             "w.weatherKey.city.cityKey.name AS cityName, " +
             "COUNT(w) AS weatherCount " +
             "FROM Weather AS w " +
-            "GROUP BY stateId, cityName")
+            "GROUP BY stateId, cityName " +
+            "ORDER BY stateId, cityName")
     List<CityWeatherSummary> countWeathersByEachCity();
 
     @Modifying
