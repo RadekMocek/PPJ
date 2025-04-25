@@ -36,6 +36,16 @@ public class ApiStateController {
         }
     }
 
+    @GetMapping("/states/{stateid}")
+    public ResponseEntity<?> getState(@PathVariable("stateid") String stateIdRaw) {
+        var stateId = stateIdRaw.toUpperCase();
+        var state = stateService.get(stateId);
+        if (state.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("State '" + stateId + "' does not exist.");
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(state.get());
+    }
+
     @GetMapping("/states")
     public ResponseEntity<List<State>> getAllStates() {
         var states = stateService.getAll();

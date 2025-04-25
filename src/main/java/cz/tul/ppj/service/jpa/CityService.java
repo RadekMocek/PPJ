@@ -55,6 +55,10 @@ public class CityService {
 
     //
 
+    public Optional<City> getByStateIdAndCityName(String stateId, String cityName) {
+        return cityRepository.findByCityKey_State_StateIdAndCityKey_Name(stateId, cityName);
+    }
+
     public List<City> getByStateId(String stateId) {
         if (stateId == null) return new ArrayList<>();
         return cityRepository.findByStateId(stateId);

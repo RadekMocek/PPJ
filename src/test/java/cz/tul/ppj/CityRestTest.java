@@ -134,6 +134,23 @@ public class CityRestTest {
 
     @Test
     public void testGet() {
+        stateService.create(state1);
+        cityService.create(city11);
+
+        client.get().uri("/cities/" + city11.getStateId() + "/" + city11.getName())
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(City.class).value(result -> assertThat(result).isEqualTo(city11));
+
+        client.get().uri("/cities/" + city12.getStateId() + "/" + city12.getName())
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isNotFound();
+    }
+
+    @Test
+    public void testGetAll() {
         stateService.createBulk(new ArrayList<>(Arrays.asList(state1, state2)));
         cityService.createBulk(new ArrayList<>(Arrays.asList(city11, city12, city21, city22)));
 

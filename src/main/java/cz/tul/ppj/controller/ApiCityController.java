@@ -53,6 +53,16 @@ public class ApiCityController {
         return ResponseEntity.status(HttpStatus.CREATED).body(city);
     }
 
+    @GetMapping("/cities/{stateid}/{cityname}")
+    public ResponseEntity<?> getCity(@PathVariable("stateid") String stateIdRaw, @PathVariable("cityname") String cityName) {
+        var stateId = stateIdRaw.toUpperCase();
+        var city = cityService.getByStateIdAndCityName(stateId, cityName);
+        if (city.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("City '" + stateId + ", " + cityName + "' does not exist.");
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(city.get());
+    }
+
     @GetMapping("/cities")
     public ResponseEntity<List<City>> getAllCities() {
         var cities = cityService.getAllSorted();

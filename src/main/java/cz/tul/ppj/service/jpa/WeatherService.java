@@ -50,6 +50,10 @@ public class WeatherService {
 
     //
 
+    public Optional<Weather> getByStateIdAndCityNameAndTimestamp(String stateId, String cityName, long timestamp) {
+        return weatherRepository.findByStateIdAndCityNameAndTimestamp(stateId, cityName, timestamp);
+    }
+
     public List<Weather> getByStateIdAndCityName(String stateId, String cityName) {
         return weatherRepository.findByStateIdAndCityName(stateId, cityName);
     }

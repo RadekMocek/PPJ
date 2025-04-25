@@ -74,16 +74,26 @@ public class ApiWeatherController {
         }
     }
 
+    @GetMapping("/weathers/{stateid}/{cityname}/{timestamp}")
+    public ResponseEntity<?> getWeather(@PathVariable("stateid") String stateIdRaw, @PathVariable("cityname") String cityName, @PathVariable("timestamp") long timestamp) {
+        var stateId = stateIdRaw.toUpperCase();
+        var weather = weatherService.getByStateIdAndCityNameAndTimestamp(stateId, cityName, timestamp);
+        if (weather.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Weather report '" + stateId + ", " + cityName + " @ " + timestamp + "' not found.");
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(weather.get());
+    }
+
+    @GetMapping("/weathers/summary")
+    public ResponseEntity<?> getWeatherSummary() {
+        var weatherSummary = weatherService.countWeathersByEachCity();
+        return ResponseEntity.status(HttpStatus.OK).body(weatherSummary);
+    }
+
     @GetMapping("/weathers/all")
     public ResponseEntity<?> getAllWeathers() {
         var weathers = weatherService.getAll();
         return ResponseEntity.status(HttpStatus.OK).body(weathers);
-    }
-
-    @GetMapping("/weathers/summary")
-    public ResponseEntity<?> getWeathers() {
-        var weatherSummary = weatherService.countWeathersByEachCity();
-        return ResponseEntity.status(HttpStatus.OK).body(weatherSummary);
     }
 
     @DeleteMapping("/weathers/{stateid}/{cityname}/{timestamp}")

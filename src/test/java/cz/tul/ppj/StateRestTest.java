@@ -74,6 +74,22 @@ public class StateRestTest {
 
     @Test
     public void testGet() {
+        stateService.create(state1);
+
+        client.get().uri("/states/" + state1.getStateId())
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(State.class).value(result -> assertThat(result).isEqualTo(state1));
+
+        client.get().uri("/states/" + state2.getStateId())
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isNotFound();
+    }
+
+    @Test
+    public void testGetAll() {
         stateService.createBulk(new ArrayList<>(Arrays.asList(state1, state2)));
 
         List<State> states = client.get().uri("/states")
