@@ -18,6 +18,13 @@ public class WebWeatherController {
         this.weatherService = weatherService;
     }
 
+    @GetMapping("/weathers/all")
+    public String getAllWeathers(Model model) {
+        var weathers = weatherService.getAll();
+        model.addAttribute("weathers", weathers);
+        return "fragments/weathers :: weatherAll";
+    }
+
     @GetMapping("/weathers/summary")
     public String getCitiesList(Model model) {
         var weatherSummary = weatherService.countWeathersByEachCity();

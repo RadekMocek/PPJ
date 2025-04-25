@@ -74,6 +74,12 @@ public class ApiWeatherController {
         }
     }
 
+    @GetMapping("/weathers/all")
+    public ResponseEntity<?> getAllWeathers() {
+        var weathers = weatherService.getAll();
+        return ResponseEntity.status(HttpStatus.OK).body(weathers);
+    }
+
     @GetMapping("/weathers/summary")
     public ResponseEntity<?> getWeathers() {
         var weatherSummary = weatherService.countWeathersByEachCity();

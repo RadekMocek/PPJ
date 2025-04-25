@@ -11,7 +11,7 @@ body {
     font-family: Consolas, monaco, monospace;
 }
 
-main {
+main.flex {
     display: flex;
     justify-content: space-evenly;
 }

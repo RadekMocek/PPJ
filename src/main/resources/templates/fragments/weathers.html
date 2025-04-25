@@ -6,6 +6,36 @@
 </head>
 <body>
 
+<div th:fragment="weatherAll">
+    <br>
+    <table>
+        <thead>
+        <tr>
+            <th>City</th>
+            <th>Datestamp</th>
+            <th>Temperature</th>
+            <th>Feelslike</th>
+            <th>Pressure</th>
+            <th>Humidity</th>
+            <th>Description</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item : ${weathers}">
+            <td th:text="${item.weatherKey.city}">City</td>
+            <td th:text="${item.weatherKey.timestamp}">Datestamp</td>
+            <td th:text="${item.temperature}">Temperature</td>
+            <td th:text="${item.feelsLike}">Feelslike</td>
+            <td th:text="${item.pressure}">Pressure</td>
+            <td th:text="${item.humidity}">Humidity</td>
+            <td th:text="${item.description}">Description</td>
+            <td>Delete</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
 <div th:fragment="weatherSummary">
     <br>
     <table>
