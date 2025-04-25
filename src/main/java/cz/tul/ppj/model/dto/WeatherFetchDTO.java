@@ -1,7 +1,6 @@
 package cz.tul.ppj.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import cz.tul.ppj.model.CityKey;
 import io.micrometer.common.util.StringUtils;
 
 public class WeatherFetchDTO {

@@ -3,6 +3,7 @@ package cz.tul.ppj;
 import cz.tul.ppj.model.City;
 import cz.tul.ppj.model.State;
 import cz.tul.ppj.model.Weather;
+import cz.tul.ppj.model.dto.WeatherFetchDTO;
 import cz.tul.ppj.service.jpa.CityService;
 import cz.tul.ppj.service.jpa.StateService;
 import cz.tul.ppj.service.jpa.WeatherService;
@@ -178,6 +179,24 @@ public class WeatherRestTest {
 
         var weathers = weatherService.getAll();
         assertTrue("All weathers should be deleted.", weathers.isEmpty());
+    }
+
+    @Test
+    public void testCreateBadRequest() {
+        var dto = new WeatherFetchDTO();
+        client.put().uri("/weathers").contentType(MediaType.APPLICATION_JSON).bodyValue(dto).accept(MediaType.APPLICATION_JSON).exchange().expectStatus().isBadRequest();
+        dto.setCitySelect("ACBDEF");
+        dto.setDatestamp("ABCDEF");
+        dto.setnDays(20);
+        client.put().uri("/weathers").contentType(MediaType.APPLICATION_JSON).bodyValue(dto).accept(MediaType.APPLICATION_JSON).exchange().expectStatus().isBadRequest();
+        dto.setnDays(7);
+        client.put().uri("/weathers").contentType(MediaType.APPLICATION_JSON).bodyValue(dto).accept(MediaType.APPLICATION_JSON).exchange().expectStatus().isBadRequest();
+        dto.setDatestamp("2025-01-01");
+        client.put().uri("/weathers").contentType(MediaType.APPLICATION_JSON).bodyValue(dto).accept(MediaType.APPLICATION_JSON).exchange().expectStatus().isBadRequest();
+        dto.setCitySelect("Liberec,CZ");
+        client.put().uri("/weathers").contentType(MediaType.APPLICATION_JSON).bodyValue(dto).accept(MediaType.APPLICATION_JSON).exchange().expectStatus().isBadRequest();
+        stateService.create(state1);
+        client.put().uri("/weathers").contentType(MediaType.APPLICATION_JSON).bodyValue(dto).accept(MediaType.APPLICATION_JSON).exchange().expectStatus().isBadRequest();
     }
 
 }
