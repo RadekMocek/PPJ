@@ -1,0 +1,10 @@
+services:
+    db-prod:
+        image: mysql:8.4.5
+        container_name: mysql-db
+        restart: always
+        environment:
+            MYSQL_DATABASE: ppj
+            MYSQL_ROOT_PASSWORD: strong_password
+        ports:
+            - "3306:3306"
