@@ -13,6 +13,8 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.ArrayList;
 
+import static cz.tul.ppj.util.Conv.kelvinToCelsius;
+
 public class WeatherFetcher {
 
     private final String API_URL = "https://history.openweathermap.org/data/2.5/";
@@ -79,8 +81,8 @@ public class WeatherFetcher {
             JSONObject obj = jsonArray.getJSONObject(i);
             long dt = obj.getLong("dt");
             var main = obj.getJSONObject("main");
-            float temp = main.getFloat("temp");
-            float feels_like = main.getFloat("feels_like");
+            float temp = kelvinToCelsius(main.getFloat("temp"));
+            float feels_like = kelvinToCelsius(main.getFloat("feels_like"));
             int pressure = main.getInt("pressure");
             int humidity = main.getInt("humidity");
             var weatherArray = obj.getJSONArray("weather");

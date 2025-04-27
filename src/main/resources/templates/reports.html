@@ -7,6 +7,7 @@
     <script src="https://unpkg.com/htmx.org@2.0.4"></script>
     <script src="https://unpkg.com/htmx-ext-response-targets@2.0.2"></script>
     <script th:src="@{/scripts/reports.js}"></script>
+    <script th:src="@{/scripts/conv.js}"></script>
 </head>
 
 <body hx-ext="response-targets">
@@ -22,7 +23,7 @@
 <main>
     <div id="response-reports-ok" class="response-ok">&nbsp;</div>
     <div id="response-reports-err" class="response-err">&nbsp;</div>
-    <div id="list-reports" hx-get="/web/weathers/all" hx-swap="innerHTML" hx-trigger="refreshReportsEvent"></div>
+    <div id="list-reports" hx-get="/web/weathers/all" hx-swap="innerHTML" hx-trigger="refreshReportsEvent" hx-on::after-request="conv();"></div>
 </main>
 
 </body>

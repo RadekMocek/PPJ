@@ -25,9 +25,9 @@
         <tbody>
         <tr th:each="item : ${weathers}">
             <td th:text="${item.weatherKey.city}">City</td>
-            <td th:text="${item.weatherKey.timestamp}">Datestamp</td>
-            <td th:text="${item.temperature}">Temperature</td>
-            <td th:text="${item.feelsLike}">Feelslike</td>
+            <td class="conv-datestamp" th:text="${item.weatherKey.timestamp}">Datestamp</td>
+            <td class="conv-temperature" th:text="${item.temperature}">Temperature</td>
+            <td class="conv-temperature" th:text="${item.feelsLike}">Feelslike</td>
             <td th:text="${item.pressure}">Pressure</td>
             <td th:text="${item.humidity}">Humidity</td>
             <td th:text="${item.description}">Description</td>
