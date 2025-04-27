@@ -7,9 +7,27 @@
         </encoder>
     </appender>
 
+    <!-- Logging :: File -->
+    <appender name="File" class="ch.qos.logback.core.FileAppender">
+        <file>logs/log.txt</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logs/log-%d{yyyy-MM-dd}.txt</fileNamePattern>
+            <maxHistory>7</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
     <!-- Root logger -->
     <root level="INFO">
+
         <appender-ref ref="Terminal" />
+
+        <springProfile name="prod">
+            <appender-ref ref="File" />
+        </springProfile>
+
     </root>
 
     <!-- Logback profile for spring framework -->

@@ -4,6 +4,9 @@
 # Database
 DatabaseDevel/
 
+# Logs
+logs/
+
 # Java
 target/
 !.mvn/wrapper/maven-wrapper.jar
