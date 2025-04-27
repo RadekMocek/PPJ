@@ -21,8 +21,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = {PpjApplication.class})
@@ -48,6 +47,7 @@ public class CityRestTest {
 
     private final State state1 = new State("CZ", "Czechia");
     private final State state2 = new State("GE", "Georgia");
+    private final State state3 = new State("ES", "Spain");
     private final City city11 = new City(state1, "Prague");
     private final City city12 = new City(state1, "Liberec");
     private final City city21 = new City(state2, "Tbilisi");
@@ -200,6 +200,24 @@ public class CityRestTest {
 
         var cities = cityService.getAllSorted();
         assertTrue("All cities should be deleted.", cities.isEmpty());
+    }
+
+    //
+
+    @Test
+    public void testCreateTestingData() {
+        client.put().uri("/cities/testing")
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isBadRequest();
+        stateService.createBulk(new ArrayList<>(Arrays.asList(state1, state2, state3)));
+        client.put().uri("/cities/testing")
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isCreated();
+        var cities = cityService.getAllSorted();
+        var nCities = cities.size();
+        assertEquals("Three cities should have been created.", 3, nCities);
     }
 
 }

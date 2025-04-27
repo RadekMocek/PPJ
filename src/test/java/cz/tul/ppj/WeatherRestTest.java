@@ -3,6 +3,7 @@ package cz.tul.ppj;
 import cz.tul.ppj.model.City;
 import cz.tul.ppj.model.State;
 import cz.tul.ppj.model.Weather;
+import cz.tul.ppj.model.dto.WeatherAverageDTO;
 import cz.tul.ppj.model.dto.WeatherFetchDTO;
 import cz.tul.ppj.service.jpa.CityService;
 import cz.tul.ppj.service.jpa.StateService;
@@ -19,10 +20,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.*;
@@ -199,4 +197,49 @@ public class WeatherRestTest {
         client.put().uri("/weathers").contentType(MediaType.APPLICATION_JSON).bodyValue(dto).accept(MediaType.APPLICATION_JSON).exchange().expectStatus().isBadRequest();
     }
 
+    @Test
+    public void testGetAverages() {
+        var weathers = new ArrayList<>(Arrays.asList(
+                new Weather(1743508800, city12, 1.1f, 0.4f, 0, 280, ""),
+                new Weather(1743595200, city12, 2.2f, 1.5f, 10, 270, ""),
+                new Weather(1743681600, city12, 3.3f, 2.6f, 20, 260, ""),
+                new Weather(1743768000, city12, 4.4f, 3.7f, 30, 250, ""),
+                new Weather(1743854400, city12, 5.5f, 4.8f, 40, 240, ""),
+                new Weather(1743940800, city12, 6.7f, 5.9f, 50, 230, ""),
+                new Weather(1744027200, city12, 7.8f, 6.0f, 60, 220, ""),
+                new Weather(1744113600, city12, 8.9f, 7.1f, 70, 210, ""),
+                new Weather(1744200000, city12, 9.0f, 8.2f, 80, 200, ""),
+                new Weather(1744286400, city12, 1.1f, 9.3f, 100, 190, ""),
+                new Weather(1744372800, city12, 2.2f, 0.4f, 110, 180, ""),
+                new Weather(1744459200, city12, 3.3f, 1.5f, 120, 170, ""),
+                new Weather(1744545600, city12, 4.4f, 2.6f, 130, 160, ""),
+                new Weather(1744632000, city12, 5.5f, 3.7f, 140, 150, "")
+        ));
+        stateService.create(state1);
+        cityService.create(city12);
+        client.get().uri("/weathers/averages?citySelect=" + city12.getName() + "," + city12.getStateId())
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(WeatherAverageDTO.class).value(result -> assertThat(result).isEqualTo(null));
+        weatherService.createBulk(weathers);
+        weathers.sort((o1, o2) -> Long.compare(o2.getTimestamp(), o1.getTimestamp()));
+        var weatherAverage = new WeatherAverageDTO(
+                city12.getStateId(), city12.getName(), 14, 1744632000, 1744113600, 1743508800,
+                5.5f, 3.7f, 140, 150,
+                weathers.stream().limit(7).mapToDouble(Weather::getTemperature).average().orElse(-1),
+                weathers.stream().limit(7).mapToDouble(Weather::getFeelsLike).average().orElse(-1),
+                weathers.stream().limit(7).mapToInt(Weather::getPressure).average().orElse(-1),
+                weathers.stream().limit(7).mapToInt(Weather::getHumidity).average().orElse(-1),
+                weathers.stream().mapToDouble(Weather::getTemperature).average().orElse(-1),
+                weathers.stream().mapToDouble(Weather::getFeelsLike).average().orElse(-1),
+                weathers.stream().mapToInt(Weather::getPressure).average().orElse(-1),
+                weathers.stream().mapToInt(Weather::getHumidity).average().orElse(-1)
+        );
+        client.get().uri("/weathers/averages?citySelect=" + city12.getName() + "," + city12.getStateId())
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(WeatherAverageDTO.class).value(result -> assertThat(result).isEqualTo(weatherAverage));
+    }
 }

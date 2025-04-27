@@ -18,8 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = {PpjApplication.class})
@@ -187,5 +186,18 @@ public class StateRestTest {
                 .exchange()
                 .expectStatus().isCreated()
                 .expectBody(State.class).value(result -> assertThat(result).isEqualTo(new State("CZ", "Czechia")));
+    }
+
+    //
+
+    @Test
+    public void testCreateTestingData() {
+        client.put().uri("/states/testing")
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isCreated();
+        var states = stateService.getAll();
+        var nStates = states.size();
+        assertEquals("Three states should have been created.", 3, nStates);
     }
 }
