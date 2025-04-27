@@ -4,11 +4,6 @@
 # Database
 DatabaseDevel/
 
-# JSON for reference
-history.city.list.json
-history.city.list.csv
-state.codes.json
-
 # Java
 target/
 !.mvn/wrapper/maven-wrapper.jar
