@@ -6,6 +6,7 @@
     <title>😏 Weather</title>
     <script src="https://unpkg.com/htmx.org@2.0.4"></script>
 </head>
+
 <body>
 
 <h1>Advanced <s>programming</s> forecasting for Java platform</h1>
@@ -17,5 +18,22 @@
 </nav>
 <hr>
 
+<main>
+    <br>
+    <form hx-get="/api/weathers/averages"
+          hx-target="#response-weather-averages"
+          hx-trigger="change"
+    >
+        <div id="select-city"
+             hx-get="/web/cities/select"
+             hx-swap="innerHTML"
+             hx-trigger="load"
+             hx-target="this"></div>
+    </form>
+
+    <div id="response-weather-averages"></div>
+</main>
+
 </body>
+
 </html>

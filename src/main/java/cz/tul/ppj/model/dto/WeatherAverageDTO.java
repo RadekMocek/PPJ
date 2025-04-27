@@ -13,14 +13,14 @@ public record WeatherAverageDTO(
         int lastPressure,
         int lastHumidity,
 
-        float avg1WeekTemperature,
-        float avg1WeekFeelsLike,
-        float avg1WeekPressure,
-        float avg1WeekHumidity,
+        double avg1WeekTemperature,
+        double avg1WeekFeelsLike,
+        double avg1WeekPressure,
+        double avg1WeekHumidity,
 
-        float avg2WeekTemperature,
-        float avg2WeekFeelsLike,
-        float avg2WeekPressure,
-        float avg2WeekHumidity
+        double avg2WeekTemperature,
+        double avg2WeekFeelsLike,
+        double avg2WeekPressure,
+        double avg2WeekHumidity
 ) {
 }

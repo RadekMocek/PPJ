@@ -42,6 +42,12 @@ public interface WeatherRepository extends ListCrudRepository<Weather, WeatherKe
             "AND w.weatherKey.timestamp = :timestamp")
     void deleteByStateIdAndCityNameAndTimestamp(@Param("stateId") String stateId, @Param("cityName") String cityName, @Param("timestamp") long timestamp);
 
+    @Query("SELECT w FROM Weather AS w " +
+            "WHERE w.weatherKey.city.cityKey.state.stateId = :stateId " +
+            "AND w.weatherKey.city.cityKey.name = :cityName " +
+            "ORDER BY w.weatherKey.timestamp DESC LIMIT 14")
+    List<Weather> findTop14(@Param("stateId") String stateId, @Param("cityName") String cityName);
+
     //
 
     interface CityWeatherSummary {

@@ -3,6 +3,8 @@ package cz.tul.ppj.model.dto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.micrometer.common.util.StringUtils;
 
+import static cz.tul.ppj.util.Conv.separateCityNameCommaStateId;
+
 public class WeatherFetchDTO {
 
     private String citySelect;
@@ -49,11 +51,7 @@ public class WeatherFetchDTO {
 
     @JsonIgnore
     public String[] getCityNameAndStateId() {
-        if (citySelect.contains(",")) {
-            int idx = citySelect.lastIndexOf(",");
-            return new String[]{citySelect.substring(0, idx), citySelect.substring(idx + 1)};
-        }
-        return null;
+        return separateCityNameCommaStateId(citySelect);
     }
 
 }

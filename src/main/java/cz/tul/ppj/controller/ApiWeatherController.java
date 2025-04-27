@@ -90,6 +90,12 @@ public class ApiWeatherController {
         return ResponseEntity.status(HttpStatus.OK).body(weatherSummary);
     }
 
+    @GetMapping("/weathers/averages")
+    public ResponseEntity<?> getWeatherAverages(@RequestParam("citySelect") String citySelect) {
+        var weatherAverage = weatherService.sth(citySelect);
+        return ResponseEntity.status(HttpStatus.OK).body(weatherAverage);
+    }
+
     @GetMapping("/weathers/all")
     public ResponseEntity<?> getAllWeathers() {
         var weathers = weatherService.getAll();

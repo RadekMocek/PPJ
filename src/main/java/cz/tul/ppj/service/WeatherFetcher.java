@@ -67,7 +67,7 @@ public class WeatherFetcher {
         weatherService.createBulk(weatherReports);
         log.info("{} Done.", logPrefix);
 
-        return new BoolAndMessage(true, "Downloaded " + weatherReports.size() + " weather reports and added new ones to database.");
+        return new BoolAndMessage(true, "Downloaded " + weatherReports.size() + " reports and added new ones to db.");
     }
 
     private static ArrayList<Weather> getWeatherReportsFromResponse(City city, String response) {

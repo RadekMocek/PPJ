@@ -16,4 +16,12 @@ public final class Conv {
         }
     }
 
+    public static String[] separateCityNameCommaStateId(String cityNameAndStateId) {
+        if (cityNameAndStateId.contains(",")) {
+            int idx = cityNameAndStateId.lastIndexOf(",");
+            return new String[]{cityNameAndStateId.substring(0, idx), cityNameAndStateId.substring(idx + 1)};
+        }
+        return null;
+    }
+
 }

@@ -2,6 +2,7 @@ package cz.tul.ppj.service.jpa;
 
 import cz.tul.ppj.model.Weather;
 import cz.tul.ppj.model.WeatherKey;
+import cz.tul.ppj.model.dto.WeatherAverageDTO;
 import cz.tul.ppj.service.repository.WeatherRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+
+import static cz.tul.ppj.util.Conv.separateCityNameCommaStateId;
 
 @Service
 public class WeatherService {
@@ -72,4 +75,48 @@ public class WeatherService {
         weatherRepository.deleteByStateIdAndCityNameAndTimestamp(stateId, cityName, timestamp);
     }
 
+    public WeatherAverageDTO sth(String citySelect) {
+        var parts = separateCityNameCommaStateId(citySelect);
+        if (parts == null) {
+            return null;
+        }
+        var cityName = parts[0];
+        var stateId = parts[1];
+        var top14 = weatherRepository.findTop14(stateId, cityName);
+        if (top14.isEmpty()) {
+            return null;
+        }
+        var lastWeather = top14.getFirst();
+        var nEvaluatedDays = top14.size();
+        if (nEvaluatedDays == 1) {
+            return new WeatherAverageDTO(stateId, cityName, nEvaluatedDays, lastWeather.getTimestamp(), -1, -1,
+                    lastWeather.getTemperature(), lastWeather.getFeelsLike(), lastWeather.getPressure(), lastWeather.getHumidity(),
+                    -1, -1, -1, -1,
+                    -1, -1, -1, -1);
+        } else if (nEvaluatedDays <= 7) {
+            var avgTemperature = top14.stream().mapToDouble(Weather::getTemperature).average().orElse(-1);
+            var avgFeelsLike = top14.stream().mapToDouble(Weather::getFeelsLike).average().orElse(-1);
+            var avgPressure = top14.stream().mapToInt(Weather::getPressure).average().orElse(-1);
+            var avgHumidity = top14.stream().mapToInt(Weather::getHumidity).average().orElse(-1);
+            return new WeatherAverageDTO(stateId, cityName, nEvaluatedDays, lastWeather.getTimestamp(), top14.getLast().getTimestamp(), -1,
+                    lastWeather.getTemperature(), lastWeather.getFeelsLike(), lastWeather.getPressure(), lastWeather.getHumidity(),
+                    avgTemperature, avgFeelsLike, avgPressure, avgHumidity,
+                    -1, -1, -1, -1);
+        } else {
+            var avg1Temperature = top14.stream().limit(7).mapToDouble(Weather::getTemperature).average().orElse(-1);
+            var avg1FeelsLike = top14.stream().limit(7).mapToDouble(Weather::getFeelsLike).average().orElse(-1);
+            var avg1Pressure = top14.stream().limit(7).mapToInt(Weather::getPressure).average().orElse(-1);
+            var avg1Humidity = top14.stream().limit(7).mapToInt(Weather::getHumidity).average().orElse(-1);
+
+            var avg2Temperature = top14.stream().mapToDouble(Weather::getTemperature).average().orElse(-1);
+            var avg2FeelsLike = top14.stream().mapToDouble(Weather::getFeelsLike).average().orElse(-1);
+            var avg2Pressure = top14.stream().mapToInt(Weather::getPressure).average().orElse(-1);
+            var avg2Humidity = top14.stream().mapToInt(Weather::getHumidity).average().orElse(-1);
+
+            return new WeatherAverageDTO(stateId, cityName, nEvaluatedDays, lastWeather.getTimestamp(), top14.get(6).getTimestamp(), top14.getLast().getTimestamp(),
+                    lastWeather.getTemperature(), lastWeather.getFeelsLike(), lastWeather.getPressure(), lastWeather.getHumidity(),
+                    avg1Temperature, avg1FeelsLike, avg1Pressure, avg1Humidity,
+                    avg2Temperature, avg2FeelsLike, avg2Pressure, avg2Humidity);
+        }
+    }
 }
