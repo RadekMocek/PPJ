@@ -13,7 +13,7 @@
 <h1>Advanced <s>programming</s> forecasting for Java platform</h1>
 <hr>
 <nav>
-    <a href="./">Dashboard</a>
+    <a href=".">Dashboard</a>
     <a href="./reports">Reports</a>
     <a>Averages</a>
 </nav>
@@ -21,9 +21,10 @@
 
 <main>
     <br>
-    <form hx-get="/api/weathers/averages"
+    <form hx-get="/web/weathers/averages"
           hx-target="#response-weather-averages"
           hx-trigger="change"
+          hx-on::after-request="conv();"
     >
         <div id="select-city"
              hx-get="/web/cities/select"
@@ -31,7 +32,8 @@
              hx-trigger="load"
              hx-target="this"></div>
     </form>
-
+    <br>
+    <hr>
     <div id="response-weather-averages"></div>
 </main>
 

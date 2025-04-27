@@ -8,7 +8,6 @@
 <body>
 
 <div th:fragment="weatherAll">
-    <br>
     <table>
         <thead>
         <tr>
@@ -82,8 +81,54 @@
 </div>
 
 <div th:fragment="weatherAverages">
-    WIP
-    <p th:text="${test}"></p>
+    <br>
+    <p th:if="${status == 0}">No data.</p>
+    <div th:unless="${status == 0}">
+        <p th:text="'Evaluating last ' + ${data.nEvaluatedDays} + ' downloaded days for \'' + ${data.stateId} + ', ' + ${data.cityName} + '\':'"></p>
+
+        <table>
+            <thead>
+            <tr>
+                <th></th>
+                <th>From</th>
+                <th>To</th>
+                <th>Temperature</th>
+                <th>Feelslike</th>
+                <th>Pressure</th>
+                <th>Humidity</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><b>Last day</b></td>
+                <td>—</td>
+                <td class="conv-datestamp" th:text="${data.timestampLast}"></td>
+                <td class="conv-temperature" th:text="${data.lastTemperature}"></td>
+                <td class="conv-temperature" th:text="${data.lastFeelsLike}"></td>
+                <td class="conv-avg" th:text="${data.lastPressure}"></td>
+                <td class="conv-avg" th:text="${data.lastHumidity}"></td>
+            </tr>
+            <tr th:if="${status >= 2}">
+                <td><b>Last 2–7 days</b></td>
+                <td class="conv-datestamp" th:text="${data.timestamp1WeekStart}"></td>
+                <td class="conv-datestamp" th:text="${data.timestampLast}"></td>
+                <td class="conv-temperature" th:text="${data.avg1WeekTemperature}"></td>
+                <td class="conv-temperature" th:text="${data.avg1WeekFeelsLike}"></td>
+                <td class="conv-avg" th:text="${data.avg1WeekPressure}"></td>
+                <td class="conv-avg" th:text="${data.avg1WeekHumidity}"></td>
+            </tr>
+            <tr th:if="${status == 3}">
+                <td><b>Last 8–14 days</b></td>
+                <td class="conv-datestamp" th:text="${data.timestamp2WeekStart}"></td>
+                <td class="conv-datestamp" th:text="${data.timestampLast}"></td>
+                <td class="conv-temperature" th:text="${data.avg2WeekTemperature}"></td>
+                <td class="conv-temperature" th:text="${data.avg2WeekFeelsLike}"></td>
+                <td class="conv-avg" th:text="${data.avg2WeekPressure}"></td>
+                <td class="conv-avg" th:text="${data.avg2WeekHumidity}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 </body>

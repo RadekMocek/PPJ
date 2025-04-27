@@ -35,7 +35,17 @@ public class WebWeatherController {
 
     @GetMapping("/weathers/averages")
     public String getWeatherAverages(Model model, @RequestParam("citySelect") String citySelect) {
-        model.addAttribute("test", citySelect); //TODO
+        var weatherAverages = weatherService.getWeatherAverages(citySelect);
+        int status; // 0=nothing; 1=1day; 2=2-7days; 3=8+days
+
+        if (weatherAverages == null) status = 0;
+        else if (weatherAverages.timestamp1WeekStart() == -1) status = 1;
+        else if (weatherAverages.timestamp2WeekStart() == -1) status = 2;
+        else status = 3;
+
+        model.addAttribute("status", status);
+        model.addAttribute("data", weatherAverages);
+
         return "fragments/weathers :: weatherAverages";
     }
 

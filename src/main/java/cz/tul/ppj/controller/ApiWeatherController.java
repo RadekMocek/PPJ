@@ -92,8 +92,8 @@ public class ApiWeatherController {
 
     @GetMapping("/weathers/averages")
     public ResponseEntity<?> getWeatherAverages(@RequestParam("citySelect") String citySelect) {
-        var weatherAverage = weatherService.sth(citySelect);
-        return ResponseEntity.status(HttpStatus.OK).body(weatherAverage);
+        var weatherAverages = weatherService.getWeatherAverages(citySelect);
+        return ResponseEntity.status(HttpStatus.OK).body(weatherAverages);
     }
 
     @GetMapping("/weathers/all")

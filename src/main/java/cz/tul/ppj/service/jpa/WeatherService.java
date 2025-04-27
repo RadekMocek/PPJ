@@ -75,7 +75,7 @@ public class WeatherService {
         weatherRepository.deleteByStateIdAndCityNameAndTimestamp(stateId, cityName, timestamp);
     }
 
-    public WeatherAverageDTO sth(String citySelect) {
+    public WeatherAverageDTO getWeatherAverages(String citySelect) {
         var parts = separateCityNameCommaStateId(citySelect);
         if (parts == null) {
             return null;

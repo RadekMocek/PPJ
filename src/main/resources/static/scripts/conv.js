@@ -1,15 +1,18 @@
 "use strict";
 
 const conv = () => {
+    [...document.getElementsByClassName("conv-avg")].forEach(el => {
+        el.textContent = twoDecimals(el.textContent);
+    });
     [...document.getElementsByClassName("conv-temperature")].forEach(el => {
-        el.textContent = twoDecimalsAndCelsius(el.textContent);
+        el.textContent = twoDecimals(el.textContent) + " °C";
     });
     [...document.getElementsByClassName("conv-datestamp")].forEach(el => {
         el.textContent = unixToHuman(el.textContent);
     });
 };
 
-const twoDecimalsAndCelsius = (number) => parseFloat(number).toFixed(2) + " °C";
+const twoDecimals = (number) => parseFloat(number).toFixed(2);
 
 const unixToHuman = (timestamp) => {
     const date = new Date(timestamp * 1000);
