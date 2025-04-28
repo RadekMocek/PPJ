@@ -4,7 +4,7 @@ Steps to run:
 
 * Install maven dependencies
 
-* Create `src/main/application.properties`:
+* Create `./src/main/application.properties`:
 
 ```text
 spring.application.name=PPJ
@@ -13,6 +13,10 @@ openweather.api.key=your_openweathermap_api_key
 ```
 
 * For `prod` profile you need MySQL running, `./docker-compose.yml` can be used
+
+&nbsp;
+
+`mvn test` will generate JaCoCo coverage report in `./target/site`
 
 <!--
 # Getting Started
