@@ -1,5 +1,19 @@
 # Advanced ~~programming~~ forecasting for Java platform
 
+Steps to run:
+
+* Install maven dependencies
+
+* Create `src/main/application.properties`:
+
+```text
+spring.application.name=PPJ
+spring.profiles.active=devel_or_prod
+openweather.api.key=your_openweathermap_api_key
+```
+
+* For `prod` profile you need MySQL running, `./docker-compose.yml` can be used
+
 <!--
 # Getting Started
 

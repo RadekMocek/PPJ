@@ -109,7 +109,8 @@
                 <td class="conv-avg" th:text="${data.lastHumidity}"></td>
             </tr>
             <tr th:if="${status >= 2}">
-                <td><b>Last 2–7 days</b></td>
+                <td><b th:with="minNumber=${T(java.lang.Math).min(7,data.nEvaluatedDays)}"
+                       th:text="'Last ' + ${minNumber} + ' days'">Last 2–7 days</b></td>
                 <td class="conv-datestamp" th:text="${data.timestamp1WeekStart}"></td>
                 <td class="conv-datestamp" th:text="${data.timestampLast}"></td>
                 <td class="conv-temperature" th:text="${data.avg1WeekTemperature}"></td>
@@ -118,7 +119,7 @@
                 <td class="conv-avg" th:text="${data.avg1WeekHumidity}"></td>
             </tr>
             <tr th:if="${status == 3}">
-                <td><b>Last 8–14 days</b></td>
+                <td><b th:text="'Last ' + ${data.nEvaluatedDays} + ' days'">Last 8–14 days</b></td>
                 <td class="conv-datestamp" th:text="${data.timestamp2WeekStart}"></td>
                 <td class="conv-datestamp" th:text="${data.timestampLast}"></td>
                 <td class="conv-temperature" th:text="${data.avg2WeekTemperature}"></td>
